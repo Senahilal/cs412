@@ -4,7 +4,7 @@ import time
 import random
 
 quotes = [
-    "A nation that does not know its past has no future..",
+    "A nation that does not know its past has no future.",
     "Everything we see in the world is the creative work of women.",
     "The biggest war is the war against ignorance",
     "Do not be afraid of telling the truth.",
