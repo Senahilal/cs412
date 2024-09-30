@@ -1,0 +1,114 @@
+*
+{
+    margin:0;
+    padding: 0;
+    font-family: "DM Sans";}
+
+body
+{
+    align-content: center;
+    font-family: "DM Sans";
+}
+
+
+/* BASE */
+
+/* NAVBAR */
+
+header{
+    background-color:#BF0000;
+    padding: 1%;
+}
+
+
+nav ul{
+    display: flex;
+    list-style-type: none; /*Removing dots from list items */
+}
+
+nav ul li{
+    margin: 10px; /*space between each li*/
+}
+
+nav a {
+    text-decoration:none; /*removing underline of the links */
+    color: white;
+    font-weight: bold;
+    font-size: calc(7px + 1vw);
+}
+
+main{
+    background-color: rgb(243, 236, 209);
+    font-size: calc(10px + 1vw);
+    text-align: center;
+    min-height:100vh;
+    padding-top: 5px;
+}
+
+/* MAIN PAGE */
+
+img{
+    max-width: 70%;
+    padding: 0 10%;
+}
+
+.restaurant-info
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.address-times
+{
+    padding: 5% 3%;
+}
+
+/*ORDER PAGE*/
+table{
+    margin:auto;
+    size: 80%;
+}
+
+td{
+    padding: 5px 20px;
+    max-width: 850px;
+}
+
+.customer-info {
+    display: block; /* Ensure each label is on its own line */
+    margin-bottom: 10px; /* Adds space between the labels */
+}
+
+.customer-info input {
+    border: 2px transparent;
+    border-radius: 5px;
+}
+
+textarea{
+    border: 2px transparent;
+    border-radius: 5px;
+}
+
+input[type="submit" i]
+{
+    background-color: #BF0000;
+    color:beige;
+    border: 2px transparent;
+    border-radius: 5px;
+    padding: calc(2px + 1vw) calc(1px + 2vw); 
+
+}
+
+
+@media screen and (max-width: 750px)
+{
+    .restaurant-info
+    {
+        display: block;
+    }
+
+    .address-times
+    {
+        padding: 5%;
+    }
+}

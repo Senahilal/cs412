@@ -1,0 +1,67 @@
+<!-- restaurant/templates/restaurant/confirmation.html -->
+{% extends 'restaurant/base.html' %}
+{% load static %} 
+
+{% block content %}
+    <h2>Confirmation</h2><br>
+
+    <div>
+        <p>Hi {{customer_name}}</p> 
+        <p>Thank you for ordering!</p><br>
+    </div>
+    
+    <p>Your order will be ready at: <strong>{{ ready_time }}</strong></p><br>
+
+    <h3>Order Summary</h3>
+    
+    <table>
+        <!-- <thead>
+            <tr>
+                <td>Total</td>
+                <td>${{ total_price|floatformat:2 }}</td>
+            </tr>
+        </thead> -->
+        <tbody>
+            {% for item in selected_items %}
+            <tr>
+                <td>
+                    {{ item.name }}
+                    {% if item.pide_option %}
+                    <br><small>Option: {{ item.pide_option }}</small>
+                    {% endif %}
+                </td>
+                <td>${{ item.price|floatformat:2 }}
+                    {% if item.pide_option %}
+                    <br><small>+${{ item.pide_option_price|floatformat:2 }}</small>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+        <tr>
+            <td>Special Instructions:</td>
+            <td>{{ special_instructions }}</td>
+        </tr>
+
+        <tr>
+            <td><h4>Customer Information:</h4></td>
+            <td>
+                <p>Name: {{ customer_name }}</p>
+                <p>Phone: {{ customer_phone }}</p>
+                <p>Email: {{ customer_email }}</p>
+            </td>
+
+        </tr>
+
+    </table>
+
+    
+
+    <h3>Total:</h3>
+    <p><strong>${{ total_price|floatformat:2 }}</strong></p>
+
+    <br>
+    <a href="{% url 'order' %}">Order Again</a>
+
+{% endblock %}
