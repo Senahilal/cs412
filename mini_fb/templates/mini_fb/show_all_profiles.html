@@ -2,6 +2,30 @@
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
-<h1>All Profiles</h1>
-<!-- List Users -->
+<h2>Profile Records</h2>
+<br>
+<table>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>City</th>
+        <th>Email</th>
+        <th>Profile Image</th>
+    </tr>
+    {% for profile in profiles %}
+    <tr>
+        <td>{{ profile.first_name }}</td>
+        <td>{{ profile.last_name }}</td>
+        <td>{{ profile.city }}</td>
+        <td>{{profile.email}}</td>
+        <td>
+            {% if profile.image_url %}
+                <img src="{{ profile.image_url }}" alt="{{profile.first_name}}'s' image" width="100">
+            {% else %}
+                No image available
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

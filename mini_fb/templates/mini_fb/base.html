@@ -7,20 +7,27 @@
 <html>
     <head>
         <title>Base.html</title>
-        <!-- <link rel="stylesheet" href="{% static 'styles.css' %}"> -->
+        <link rel="stylesheet" href="{% static 'stylesmini.css' %}">
     </head>
 
     <body>
+        <header>
+            <nav>
+                <ul>
+                    <!-- use the scriptlet URL function to look up a URL by name -->
+                    <!-- TODO LATER -->
+                    <!-- <li><a href="{% url 'quote' %}">Home</a></li> -->
+        
+                </ul>
+            </nav>
+        </header>
 
-    <nav>
-        <ul>
-            <!-- EDIT -->
-        </ul>
-    </nav>
+        <main>
+            {% block content %}
+            <!-- show_all here -->
+            {% endblock %}
 
-    {% block content %}
-    <!-- show_all here -->
-    {% endblock %}
+        </main>
 
     </body>
 </html>
