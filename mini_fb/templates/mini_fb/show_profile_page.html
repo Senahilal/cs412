@@ -12,4 +12,20 @@
     <p>No profile image available.</p>
 {% endif %}
 
+<div>
+    {%if profile.get_status_messages%}
+    <h4>Status Messages</h4>
+    <ul>
+        {% for m in profile.get_status_messages %}
+            <li>
+                <p>{{ m.timestamp }} - {{ m.message }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No status messages available.</p>
+    {%endif%}
+</div>
+
+
 {% endblock %}

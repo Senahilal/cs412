@@ -39,7 +39,6 @@ nav a {
 
 
 
-
 /* MAIN */
 main{
     background-color:#1F2739;
@@ -56,35 +55,6 @@ h2{
 }
 
 /* TABLE */
-/* table{
-    margin: auto;
-    text-align: center;
-    overflow: hidden;
-    width: 80%;
-    margin: 0 auto;
-    display: table;
-    padding: 0 0 8em 0;
-    background-color: #323C50;
-    color: #FB667A;
-
-    
-    
-}
-
-td{
-    border: 1px solid black;
-    padding: 2px;
-    font-weight: normal;
-}
-
-th{
-    border: 1px solid black;
-    padding: 2px;
-    color:yellow;
-    font-weight: bold;
-
-} */
-
 table th{
     font-weight: bold;
     font-size: 1em;
@@ -113,4 +83,10 @@ table td, table th {
     padding-left:2%; 
     border: 1px solid black; 
     background-color: #323C50;
+}
+
+table a{
+    text-decoration:none;
+    color: rgb(239, 245, 188);
+    /* font-weight: bold; */
 }
