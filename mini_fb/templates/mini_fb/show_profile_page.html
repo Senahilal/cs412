@@ -1,0 +1,15 @@
+<!-- mini_fb/templats/mini_fb/show_profile_page.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+<p><strong>City:</strong> {{ profile.city }}</p>
+<p><strong>Email:</strong> {{ profile.email }}</p>
+
+{% if profile.image_url %}
+    <img src="{{ profile.image_url }}" alt="Profile Image" width="300">
+{% else %}
+    <p>No profile image available.</p>
+{% endif %}
+
+{% endblock %}

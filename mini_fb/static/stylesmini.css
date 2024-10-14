@@ -17,7 +17,7 @@ body
 
 header{
     background-color:rgb(19, 17, 17);
-    padding: 4vh;
+    padding: 3vh;
 }
 
 
@@ -27,14 +27,14 @@ nav ul{
 }
 
 nav ul li{
-    margin: 10px; /*space between each li*/
+    margin:0 15px; /*space between each li*/
 }
 
 nav a {
     text-decoration:none; /*removing underline of the links */
     color: white;
     font-weight: bold;
-    font-size: calc(7px + 1vw);
+    font-size: calc(5px + 1vw);
 }
 
 
