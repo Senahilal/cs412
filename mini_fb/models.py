@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.urls import reverse
 
 #This Profile model includes the following data attributes: first name, last name, city, email address, and a profile image url.
 
@@ -21,6 +22,10 @@ class Profile(models.Model):
     def get_status_messages(self):
         '''Get all status messages for this profile, ordered by timestamp.'''
         return StatusMessage.objects.filter(profile=self).order_by('-timestamp')
+    
+    def get_absolute_url(self):
+        '''Return a URL to show this one profile'''
+        return reverse('show_profile', kwargs={'pk': self.pk})
 
 
 class StatusMessage(models.Model):

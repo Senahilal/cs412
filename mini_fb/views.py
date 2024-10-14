@@ -1,9 +1,11 @@
 #mini_fb/urls.py
 # views to show the mini_fb application
-
+from typing import Any
 from django.shortcuts import render
+from django.urls import reverse
 
-from . models import * 
+from . models import *
+from . forms import *
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 
 # class-based view
@@ -19,3 +21,8 @@ class ShowProfilePageView(DetailView):
     model = Profile
     template_name = 'mini_fb/show_profile_page.html'
     context_object_name = 'profile'
+
+class CreateProfileView(CreateView):
+    model = Profile
+    form_class = CreateProfileForm
+    template_name = 'mini_fb/create_profile_form.html'
