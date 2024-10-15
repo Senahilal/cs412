@@ -25,6 +25,9 @@
     {% else %}
     <p>No status messages available.</p>
     {%endif%}
+
+    <!-- Link to the create status message page -->
+    <a href="{% url 'create_status' profile.pk %}">Add a new status message</a>
 </div>
 
 
