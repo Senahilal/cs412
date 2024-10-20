@@ -1,1 +1,1 @@
-https://cs412-ebon.vercel.app/mini_fb/show_all
+https://cs412-ebon.vercel.app/mini_fb
