@@ -26,3 +26,6 @@ urlpatterns = [
     path('restaurant/', include('restaurant.urls')),
     path("mini_fb/", include("mini_fb.urls")),
 ]
+
+## update project-level URLs to include media directory
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

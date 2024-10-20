@@ -19,6 +19,15 @@
         {% for m in profile.get_status_messages %}
             <li>
                 <p>{{ m.timestamp }} - {{ m.message }}</p>
+                
+                <!-- Getting all images of the status message -->
+                
+                {% for img in m.get_images %}
+                    {% if img.image_file %}
+                        <img src="{{ img.image_file.url }}" alt="Status Image" width="200">
+                    {% endif %}
+                {% endfor %}
+
             </li>
         {% endfor %}
     </ul>

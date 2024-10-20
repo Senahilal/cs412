@@ -1,4 +1,4 @@
-#mini_fb/urls.py
+#mini_fb/views.py
 # views to show the mini_fb application
 from typing import Any
 from django.shortcuts import render
