@@ -15,8 +15,6 @@ class CreateProfileForm(forms.ModelForm):
 
 class CreateStatusMessageForm(forms.ModelForm):
     '''Form to create status message'''
-
-    message = forms.CharField(label="Message", required=True)
     class Meta:
         model = StatusMessage
         fields = ['message']

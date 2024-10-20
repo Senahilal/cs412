@@ -29,10 +29,10 @@
                         <img src="{{ img.image_file.url }}" alt="Status Image" width="200">
                     {% endif %}
                 {% endfor %}
-
-                <!-- Link to delete the status message -->
-                <a href="{% url 'delete_status' m.pk %}">Delete</a>
                 
+                <!-- Link to delete the status message -->
+                <p><a href="{% url 'delete_status' m.pk %}">Delete</a></p>
+                <p><a href="{% url 'update_status' m.pk %}">Update</a></p>
             </li>
         {% endfor %}
     </ul>

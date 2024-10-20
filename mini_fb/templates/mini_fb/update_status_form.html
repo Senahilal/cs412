@@ -1,0 +1,19 @@
+<!-- mini_fb/templats/mini_fb/update_status_form.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+<h2>Update Status</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Status</button>
+</form>
+
+<!-- Form to cancel and go back to the profile page -->
+<form action="{% url 'show_profile' status.profile.pk %}">
+    <button type="submit">Cancel</button>
+</form>
+
+{% endblock %}
