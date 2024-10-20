@@ -30,6 +30,9 @@
                     {% endif %}
                 {% endfor %}
 
+                <!-- Link to delete the status message -->
+                <a href="{% url 'delete_status' m.pk %}">Delete</a>
+                
             </li>
         {% endfor %}
     </ul>
