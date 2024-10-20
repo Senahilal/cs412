@@ -5,6 +5,8 @@
 <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
 <p><strong>City:</strong> {{ profile.city }}</p>
 <p><strong>Email:</strong> {{ profile.email }}</p>
+<a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+<br>
 
 {% if profile.image_url %}
     <img src="{{ profile.image_url }}" alt="Profile Image" width="300">
