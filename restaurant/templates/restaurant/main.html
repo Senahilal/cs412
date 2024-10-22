@@ -1,0 +1,48 @@
+<!-- restaurant/templates/restaurant/main.html -->
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+    <h1>Boston Doner</h1><br>
+    <div class ="restaurant-info">
+        <img src="{% static 'boston-doner.png' %}" alt="restaurant-img">
+        <div class="address-times">
+            <p><strong>Address:</strong> 55 Causeway St, Boston, MA 02114</p><br>
+
+            <table>
+                <tr>
+                    <td><strong>Sunday</strong></td>
+                    <td>10:30–00:00</td>
+                </tr>
+                <tr>
+                    <td><strong>Monday</strong></td>
+                    <td>10:30–00:00</td>
+                </tr>
+                <tr>
+                    <td><strong>Tuesday</strong></td>
+                    <td>10:30–00:00</td>
+                </tr>
+                <tr>
+                    <td><strong>Wednesday</strong></td>
+                    <td>10:30–00:00</td>
+                </tr>
+                <tr>
+                    <td><strong>Thursday</strong></td>
+                    <td>10:30–00:00</td>
+                </tr>
+                <tr>
+                    <td><strong>Friday</strong></td>
+                    <td>10:30–00:00</td>
+                </tr>
+                <tr>
+                    <td><strong>Saturday</strong></td>
+                    <td>10:30–00:00</td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+    
+    
+
+{% endblock %}

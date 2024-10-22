@@ -1,0 +1,8 @@
+<!-- quotes/templates/quotes/quote.html -->
+{% extends 'quotes/base.html' %}
+
+{% block content %}
+       <img src="{{ image }}" alt="theImage" style="max-width:300px; height:auto;"> <!-- Adjust styles as needed -->
+       <br>
+       <p>{{ quote }}</p>
+{% endblock %}

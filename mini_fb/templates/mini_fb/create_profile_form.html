@@ -1,0 +1,21 @@
+<!-- mini_fb/templats/mini_fb/create_profile_form.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+
+<h2>Create a New Profile</h2>
+<form method="post">
+    {% csrf_token %}
+
+    <!-- display the form (context variable) -->
+    <!-- {{form}} -->
+
+    <!-- display as table -->
+    <!-- {{form.as_table}} -->
+
+    <!-- display as paragraphs -->
+    {{ form.as_p }}
+    <button type="submit">Create Profile</button>
+</form>
+
+{% endblock %}
