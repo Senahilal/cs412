@@ -1,1 +1,1 @@
-https://cs412-ebon.vercel.app/mini_fb/show_all
+https://fierce-peak-76386-85a8e6a2ee53.herokuapp.com/mini_fb/show_all
