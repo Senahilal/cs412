@@ -25,7 +25,8 @@ SECRET_KEY = 'django-insecure-e#e0ra=)&dl0v+g0-r76o&m5uix#m_sv*kl9ck+_dvoj=we#mt
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ['.vercel.app', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -86,14 +87,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
-# import dj_database_url
-
-
-# DATABASES = {
-#     'default': dj_database_url.config(default='postgresql://postgres:eDdzhLHRuIxtpbuZIshmtltwLYLQqXbK@junction.proxy.rlwy.net:22001/railway'),
-# }
 
 
 # Password validation
