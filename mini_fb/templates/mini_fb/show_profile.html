@@ -2,25 +2,38 @@
 {% extends 'mini_fb/base.html' %}
 
 {% block content %}
-<h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
-<p><strong>City:</strong> {{ profile.city }}</p>
-<p><strong>Email:</strong> {{ profile.email }}</p>
-<a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
-<br>
 
-{% if profile.image_url %}
-    <img src="{{ profile.image_url }}" alt="Profile Image" width="300">
-{% else %}
-    <p>No profile image available.</p>
-{% endif %}
+<div class="profile-main-container">
 
-<div>
+    <div class="profile-image">
+        {% if profile.image_url %}
+        <img src="{{ profile.image_url }}" alt="Profile Image" width="300">
+        {% else %}
+            <p>No profile image available.</p>
+        {% endif %}
+    </div>
+    <div class="profile-info">
+        <h2>{{ profile.first_name }} {{ profile.last_name }}</h2>
+        <p><strong>City:</strong> {{ profile.city }}</p>
+        <p><strong>Email:</strong> {{ profile.email }}</p>
+        <br>
+        <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
+    </div>
+
+</div>
+
+<div class="status-messages">
     {%if profile.get_status_messages%}
-    <h4>Status Messages</h4>
+    
+    <div class="status-title">
+        <h4>Status Messages</h4>
+        <!-- Link to the create status message page -->
+        <small><a href="{% url 'create_status' profile.pk %}">Add a new status</a></small>
+    </div>
     <ul>
         {% for m in profile.get_status_messages %}
             <li>
-                <p>{{ m.timestamp }} - {{ m.message }}</p>
+                <p>{{ m.message }} <small class="status-date">{{ m.timestamp }}</small></p>
                 
                 <!-- Getting all images of the status message -->
                 
@@ -30,9 +43,11 @@
                     {% endif %}
                 {% endfor %}
                 
-                <!-- Link to delete the status message -->
-                <p><a href="{% url 'delete_status' m.pk %}">Delete</a></p>
-                <p><a href="{% url 'update_status' m.pk %}">Update</a></p>
+                <!-- Linka to delete and update status message -->
+                <div class="status-actions">
+                    <a href="{% url 'delete_status' m.pk %}" class="delete-link">Delete</a>
+                    <a href="{% url 'update_status' m.pk %}" class="update-link">Update</a>
+                </div>
             </li>
         {% endfor %}
     </ul>
@@ -40,8 +55,7 @@
     <p>No status messages available.</p>
     {%endif%}
 
-    <!-- Link to the create status message page -->
-    <a href="{% url 'create_status' profile.pk %}">Add a new status message</a>
+    
 </div>
 
 

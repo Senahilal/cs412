@@ -90,3 +90,88 @@ table a{
     color: rgb(239, 245, 188);
     /* font-weight: bold; */
 }
+
+
+
+
+/* show_profile_page.html */
+
+/* profile-main-container */
+.profile-main-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #2D3E50;
+    border-radius: 5px;
+    margin-bottom: 5%;
+
+}
+
+.profile-image{
+    padding: 4%;
+}
+
+.profile-info{
+    padding: 4%;
+}
+
+.update-profile-link{
+    text-decoration:none; /*removing underline of the links */
+    border:#1F2739 solid 1px;
+    border-radius: 5px;
+    padding:5px;
+    color: black;
+    background-color: #A7A1AE;
+}
+
+
+/* status-messages */
+
+/* Title and +status */
+.status-title {
+    display: flex;
+    justify-content: center; /* Centers the Status Messages title */
+    align-items: center;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    position: relative;
+    font-size: calc(20px + 1vw);    
+
+}
+
+.status-title a {
+    color: #FB667A;
+    text-decoration: none;
+    font-weight: bold;
+    position: absolute;
+    right: 0;
+    font-size: calc(3px + 1vw);    
+}
+
+/* Status */
+.status-messages{
+    background-color: #2D3E50;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.status-messages li{
+    list-style-type: none; /*Removing dots from list items */
+}
+
+.status-date{
+    font-size: 50%;
+}
+
+.status-actions{
+    margin:10px auto;
+}
+.delete-link, .update-link{
+    text-decoration:none; /*removing underline of the links */
+    border:#1F2739 solid 1px;
+    border-radius: 5px;
+    padding:5px;
+    color: black;
+    background-color: #A7A1AE;
+    
+}
