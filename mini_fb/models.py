@@ -26,6 +26,19 @@ class Profile(models.Model):
     def get_absolute_url(self):
         '''Return a URL to show this one profile'''
         return reverse('show_profile', kwargs={'pk': self.pk})
+    
+    def get_friends(self):
+        '''List of Profiles that are friends with this Profile.'''
+        friends = Friend.objects.filter(models.Q(profile1=self) | models.Q(profile2=self))
+        friend_profiles = []
+
+        for friend in friends:
+            if friend.profile1 == self:
+                friend_profiles.append(friend.profile2)
+            else:
+                friend_profiles.append(friend.profile1)
+
+        return friend_profiles
 
 
 class StatusMessage(models.Model):
@@ -53,3 +66,14 @@ class Image(models.Model):
     def __str__(self):
         '''Return a string representation of this Image.'''
         return f"Image for {self.status_message}"
+
+class Friend(models.Model):
+    '''Represents a friendship relation between two profiles.'''
+
+    profile1 = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name="profile1")
+    profile2 = models.ForeignKey('Profile', on_delete=models.CASCADE, related_name="profile2")
+    timestamp = models.DateTimeField(default=datetime.now) #timestamp of the friendship creation (i.e., “anniversary”) date
+
+    def __str__(self):
+        '''Relationship as a string representation.'''
+        return f"{self.profile1.first_name} {self.profile1.last_name} & {self.profile2.first_name} {self.profile2.last_name}"

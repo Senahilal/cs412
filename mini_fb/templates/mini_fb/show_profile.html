@@ -22,6 +22,28 @@
 
 </div>
 
+<div class="friends-section-container">
+    <h4>Friends</h4>
+    <br>
+    <div class="friends-list">
+        {% if profile.get_friends %}
+        <ul>
+            {% for friend in profile.get_friends %}
+            <li>
+                {% if profile.image_url %}
+                <img src="{{ friend.image_url }}" alt="Friend Image" width="300">
+                {%endif%}
+                <br>
+                <a href="{% url 'show_profile' friend.pk %}">{{ friend.first_name }} {{ friend.last_name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>This user has no friends yet.</p>
+        {% endif %}
+    </div>
+</div>
+
 <div class="status-messages">
     {%if profile.get_status_messages%}
     
@@ -39,7 +61,7 @@
                 
                 {% for img in m.get_images %}
                     {% if img.image_file %}
-                        <img src="{{ img.image_file.url }}" alt="Status Image" width="200">
+                        <img class="friend-image" src="{{ img.image_file.url }}" alt="Status Image" width="200">
                     {% endif %}
                 {% endfor %}
                 

@@ -125,9 +125,16 @@ table a{
 }
 
 
-/* status-messages */
 
-/* Title and +status */
+/* Status */
+/* status-messages container*/
+.status-messages{
+    background-color: #2D3E50;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+/* Title */
 .status-title {
     display: flex;
     justify-content: center; /* Centers the Status Messages title */
@@ -139,6 +146,7 @@ table a{
 
 }
 
+/* Add status Link */
 .status-title a {
     color: #FB667A;
     text-decoration: none;
@@ -146,13 +154,6 @@ table a{
     position: absolute;
     right: 0;
     font-size: calc(3px + 1vw);    
-}
-
-/* Status */
-.status-messages{
-    background-color: #2D3E50;
-    border-radius: 5px;
-    padding: 10px;
 }
 
 .status-messages li{
@@ -174,4 +175,32 @@ table a{
     color: black;
     background-color: #A7A1AE;
     
+}
+
+/* friends-list-container */
+.friends-section-container{
+    background-color: #2D3E50;
+    border-radius: 5px;
+    margin-bottom: 5%;
+    padding: 10px;
+}
+
+.friends-list ul{
+    display: flex;
+    display: row;
+    justify-content: center;
+}
+
+.friends-list ul a{
+    text-decoration: none;
+}
+
+.friends-list li{
+    list-style-type: none;
+    margin-right: 20px;
+    /* text-decoration:none; */
+}
+
+.friends-list img{
+    max-width: 100px;
 }
