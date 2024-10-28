@@ -4,18 +4,17 @@
 {% block content %}
 <h3>People {{ profile.first_name }} may know:</h3>
 
-<div class="friend-suggestions">
+<div class="friend-suggestions-container">
     {% for suggestion in friend_suggestions %}
-        <div class="suggestion">
-            <p><strong>{{ suggestion.first_name }} {{ suggestion.last_name }}</strong></p>
+        <div class="friend-suggestion-card">
             {% if suggestion.image_url %}
-                <img src="{{ suggestion.image_url }}" alt="Profile Image" width="100">
+                <img src="{{ suggestion.image_url }}" alt="{{ suggestion.first_name }} profile image" width="100">
             {% else %}
-                <p>No image available</p>
+                <p>No Image Available</p>
             {% endif %}
+            <p><strong>{{ suggestion.first_name }} {{ suggestion.last_name }}</strong></p>
+            <a href="{% url 'add_friend' profile.pk suggestion.pk %}">Add Friend</a>
         </div>
-    {% empty %}
-        <p>No friend suggestions available.</p>
     {% endfor %}
 </div>
 

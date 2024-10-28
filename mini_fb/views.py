@@ -105,6 +105,17 @@ class UpdateStatusMessageView(UpdateView):
         '''Redirect to the profile page after updating a status message.'''
         return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
 
+class CreateFriendView(View):
+    def dispatch(self, request, *args, **kwargs):
+        # Get the profiles involved in the friendship
+        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        other_profile = Profile.objects.get(pk=self.kwargs['other_pk'])
+        
+        # Add the friend
+        profile.add_friend(other_profile)
+        
+        # Redirect back to the profile page
+        return redirect('show_profile', pk=profile.pk)
 
 class ShowFriendSuggestionsView(DetailView):
     model = Profile
