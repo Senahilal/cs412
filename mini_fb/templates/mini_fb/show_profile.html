@@ -23,7 +23,13 @@
 </div>
 
 <div class="friends-section-container">
-    <h4>Friends</h4>
+    
+    <div class="status-title">
+        <h4>Friends</h4>
+        <!-- Link to the create status message page -->
+        <small><a href="{% url 'friend_suggestions' profile.pk %}">See Friend Suggestions</a>
+        </small>
+    </div>
     <br>
     <div class="friends-list">
         {% if profile.get_friends %}

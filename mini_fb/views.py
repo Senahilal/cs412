@@ -6,7 +6,8 @@ from django.urls import reverse
 
 from . models import *
 from . forms import *
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, View
+from django.shortcuts import redirect, get_object_or_404
 
 # class-based view
 class ShowAllProfilesView(ListView):
@@ -103,3 +104,14 @@ class UpdateStatusMessageView(UpdateView):
     def get_success_url(self):
         '''Redirect to the profile page after updating a status message.'''
         return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
+
+
+class ShowFriendSuggestionsView(DetailView):
+    model = Profile
+    template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['friend_suggestions'] = self.object.get_friend_suggestions()
+        return context

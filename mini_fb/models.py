@@ -61,6 +61,16 @@ class Profile(models.Model):
             return "Friend added successfully."
         return "Friendship already exists."
 
+    def get_friend_suggestions(self):
+        # Get all profiles except self
+        all_profiles = Profile.objects.exclude(pk=self.pk)
+        
+        # Filter profiles not in current friends list
+        current_friends = self.get_friends()
+        suggestions = all_profiles.exclude(pk__in=[friend.pk for friend in current_friends])
+        
+        return suggestions
+
 
 class StatusMessage(models.Model):
     '''Encapsulate the data for a status message.'''

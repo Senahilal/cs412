@@ -1,0 +1,23 @@
+<!-- mini_fb/templats/mini_fb/profile/<int:pk>/friend_suggestions.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h3>People {{ profile.first_name }} may know:</h3>
+
+<div class="friend-suggestions">
+    {% for suggestion in friend_suggestions %}
+        <div class="suggestion">
+            <p><strong>{{ suggestion.first_name }} {{ suggestion.last_name }}</strong></p>
+            {% if suggestion.image_url %}
+                <img src="{{ suggestion.image_url }}" alt="Profile Image" width="100">
+            {% else %}
+                <p>No image available</p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No friend suggestions available.</p>
+    {% endfor %}
+</div>
+
+<a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+{% endblock %}
