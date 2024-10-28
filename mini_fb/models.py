@@ -40,6 +40,27 @@ class Profile(models.Model):
 
         return friend_profiles
 
+    def add_friend(self, other):
+        '''Add a Friend relation between self and other'''
+
+        # Check if the other profile exists
+        if not isinstance(other, Profile):
+            return "Invalid profile object."
+        
+        # Check for self-friending
+        if self == other:
+            return "Cannot add self as friend."
+
+        # Check if a friendship already exists in either direction
+        friendship_exists = Friend.objects.filter(models.Q(profile1=self, profile2=other) | models.Q(profile1=other, profile2=self)).exists()
+
+        if not friendship_exists:
+            # Create a new Friend instance and save
+            new_friendship = Friend(profile1=self, profile2=other)
+            new_friendship.save()
+            return "Friend added successfully."
+        return "Friendship already exists."
+
 
 class StatusMessage(models.Model):
     '''Encapsulate the data for a status message.'''
