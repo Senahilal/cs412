@@ -4,4 +4,4 @@ Restaurant App: https://fierce-peak-76386-85a8e6a2ee53.herokuapp.com/restaurant/
 
 Quotes App: https://fierce-peak-76386-85a8e6a2ee53.herokuapp.com/quotes
 
-Note: Google Chrome is displaying a Dangerous website warning for many Heroku web applications, including these same solutions. It is safe to view these sites.
+Note: Google Chrome is displaying a Dangerous website warning for many Heroku web applications, but it is safe to view these sites.
