@@ -18,6 +18,7 @@
         <p><strong>Email:</strong> {{ profile.email }}</p>
         <br>
         <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
+        <a href="{% url 'news_feed' profile.pk %}">News Feed</a>
     </div>
 
 </div>

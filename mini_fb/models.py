@@ -70,6 +70,13 @@ class Profile(models.Model):
         suggestions = all_profiles.exclude(pk__in=[friend.pk for friend in current_friends])
         
         return suggestions
+    
+    def get_news_feed(self):
+        # Get all status messages of friends
+        friend_profiles = self.get_friends()
+        friend_status_messages = StatusMessage.objects.filter(profile__in=friend_profiles).order_by('-timestamp')
+
+        return friend_status_messages
 
 
 class StatusMessage(models.Model):
