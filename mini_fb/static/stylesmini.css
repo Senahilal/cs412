@@ -116,7 +116,16 @@ table a{
 }
 
 .update-profile-link{
-    text-decoration:none; /*removing underline of the links */
+    text-decoration:none; /*removing underline*/
+    border:#1F2739 solid 1px;
+    border-radius: 5px;
+    padding:5px;
+    color: black;
+    background-color: #A7A1AE;
+}
+
+.news-feed-link{
+    text-decoration:none; /*removing underline*/
     border:#1F2739 solid 1px;
     border-radius: 5px;
     padding:5px;
@@ -203,4 +212,44 @@ table a{
 
 .friends-list img{
     max-width: 100px;
+}
+
+
+/* News Feed */
+.back-to-profile-link{
+    color: #FB667A;
+    text-decoration: none;
+    font-weight: bold;
+    position: absolute;
+    left: 20;
+    font-size: calc(5px + 1vw);
+    padding: 10px;
+}
+
+.news-feed{
+    background-color: #2D3E50;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.news-feed-profile{
+    display: flex;
+    flex-direction: row;
+}
+
+.news-feed-profile img{
+    width: 50px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.news-feed-status-message{
+    text-align: left;
+    margin-left: 60px;
+    margin-bottom: 10px;
+}
+
+.news-feed-status-message img{
+    max-width: 200;
+    padding: 5px;
 }
