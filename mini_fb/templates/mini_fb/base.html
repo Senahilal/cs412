@@ -24,7 +24,7 @@ Put common code here, specific code in separate pages
                         <li>
                             <form method="POST" action="{% url 'logout' %}">
                                 {% csrf_token %}
-                                <button type="submit">Logout</button>
+                                <button type="submit" id="logout-button">Logout</button>
                             </form>
                         </li>
                         

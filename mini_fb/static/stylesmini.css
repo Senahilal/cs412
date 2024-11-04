@@ -31,10 +31,18 @@ nav ul li{
 }
 
 nav a {
-    text-decoration:none; /*removing underline of the links */
+    text-decoration:none; /*removing underline of the links */ 
     color: white;
     font-weight: bold;
     font-size: calc(5px + 1vw);
+}
+
+#logout-button{
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: calc(5px + 1vw);
+    background-color: transparent;
 }
 
 
