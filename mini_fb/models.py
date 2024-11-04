@@ -16,7 +16,7 @@ class Profile(models.Model):
 
     #associate each Profile with an User for authentication and identification purposes
     #, null=True, blank=True
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
         '''Return a string representation of this Profile.'''

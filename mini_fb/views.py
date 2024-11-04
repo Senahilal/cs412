@@ -81,6 +81,9 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
         # add the profile to the context data
         context['profile'] = profile  # Add it to the context
         return context
+    
+    def get_login_url(self):
+        return reverse('login')
 
 class UpdateProfileView(LoginRequiredMixin, UpdateView):
     model = Profile
@@ -98,6 +101,9 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
             return redirect('show_profile', pk=profile.pk)
         
         return super().dispatch(request, *args, **kwargs)
+    
+    def get_login_url(self):
+        return reverse('login')
 
 class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
     model = StatusMessage
