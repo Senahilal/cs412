@@ -39,13 +39,6 @@ Put common code here, specific code in separate pages
             <div>
                 {% if user.is_authenticated %}
                     Logged in user: {{request.user}}
-                    
-                    <form method="POST" action="{% url 'logout' %}">
-                        {% csrf_token %}
-                        <button type="submit">Logout</button>
-                    </form>
-                {% else %}
-                    <a href="{% url 'login' %}">Login</a>
                 {% endif %}
             </div>
 
