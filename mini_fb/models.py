@@ -1,10 +1,9 @@
 from django.db import models
 from datetime import datetime
 from django.urls import reverse
+from django.contrib.auth.models import User
 
 #This Profile model includes the following data attributes: first name, last name, city, email address, and a profile image url.
-
-# Create your models here.
 class Profile(models.Model):
     '''Encapsulate the data for an user profile.'''
 
@@ -14,6 +13,9 @@ class Profile(models.Model):
     city = models.TextField(blank=False)
     email = models.TextField(blank=False)
     image_url = models.URLField(blank=True) 
+
+    #associate each Profile with an User for authentication and identification purposes
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         '''Return a string representation of this Profile.'''

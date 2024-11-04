@@ -17,8 +17,10 @@
         <p><strong>City:</strong> {{ profile.city }}</p>
         <p><strong>Email:</strong> {{ profile.email }}</p>
         <br>
-        <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
-        <a href="{% url 'news_feed' profile.pk %}" class="news-feed-link">News Feed</a>
+        {% if request.user == profile.user %}
+            <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
+            <a href="{% url 'news_feed' profile.pk %}" class="news-feed-link">News Feed</a>
+        {% endif %}
     </div>
 
 </div>
@@ -28,8 +30,9 @@
     <div class="status-title">
         <h4>Friends</h4>
         <!-- Link to the create status message page -->
-        <small><a href="{% url 'friend_suggestions' profile.pk %}">See Friend Suggestions</a>
-        </small>
+        {% if request.user == profile.user %}
+        <small><a href="{% url 'friend_suggestions' profile.pk %}">See Friend Suggestions</a></small>
+        {% endif %}
     </div>
     <br>
     <div class="friends-list">
@@ -57,7 +60,9 @@
     <div class="status-title">
         <h4>Status Messages</h4>
         <!-- Link to the create status message page -->
-        <small><a href="{% url 'create_status' profile.pk %}">Add a new status</a></small>
+        {% if request.user == profile.user %}
+            <small><a href="{% url 'create_status' profile.pk %}">Add a new status</a></small>
+        {% endif %}
     </div>
     <ul>
         {% for m in profile.get_status_messages %}
@@ -71,12 +76,15 @@
                         <img class="friend-image" src="{{ img.image_file.url }}" alt="Status Image" width="200">
                     {% endif %}
                 {% endfor %}
-                
-                <!-- Linka to delete and update status message -->
-                <div class="status-actions">
-                    <a href="{% url 'delete_status' m.pk %}" class="delete-link">Delete</a>
-                    <a href="{% url 'update_status' m.pk %}" class="update-link">Update</a>
-                </div>
+
+                <!-- Show delete/update links only if the current user owns the profile -->
+                {% if request.user == profile.user %}
+                    <!-- Link to delete and update status message -->
+                    <div class="status-actions">
+                        <a href="{% url 'delete_status' m.pk %}" class="delete-link">Delete</a>
+                        <a href="{% url 'update_status' m.pk %}" class="update-link">Update</a>
+                    </div>
+                {% endif %}
             </li>
         {% endfor %}
     </ul>
