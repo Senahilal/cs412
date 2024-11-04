@@ -55,7 +55,6 @@
 </div>
 
 <div class="status-messages">
-    {%if profile.get_status_messages%}
     
     <div class="status-title">
         <h4>Status Messages</h4>
@@ -64,6 +63,8 @@
             <small><a href="{% url 'create_status' profile.pk %}">Add a new status</a></small>
         {% endif %}
     </div>
+
+    {%if profile.get_status_messages%}
     <ul>
         {% for m in profile.get_status_messages %}
             <li>
