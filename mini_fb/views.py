@@ -90,6 +90,14 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         '''Redirect to the profile page after updating a profile.'''
         return reverse('show_profile', kwargs={'pk': self.kwargs['pk']})
+    
+    def dispatch(self, request, *args, **kwargs):
+        # Ensure the user is the owner of the profile
+        profile = self.get_object()
+        if profile.user != request.user:
+            return redirect('show_profile', pk=profile.pk)
+        
+        return super().dispatch(request, *args, **kwargs)
 
 class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
     model = StatusMessage
@@ -99,6 +107,12 @@ class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
     def get_success_url(self):
         '''Redirect to the profile page after deleting the status message'''
         return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
+    
+    def dispatch(self, request, *args, **kwargs):
+        status = self.get_object()
+        # Ensure the status belongs to the user's profile
+        if status.profile.user != request.user:
+            return redirect('show_profile', pk=status.profile.pk)
 
 class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
     model = StatusMessage
@@ -109,6 +123,12 @@ class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         '''Redirect to the profile page after updating a status message.'''
         return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
+    
+    def dispatch(self, request, *args, **kwargs):
+        status = self.get_object()
+        # Ensure the status belongs to the user's profile
+        if status.profile.user != request.user:
+            return redirect('show_profile', pk=status.profile.pk)
 
 class CreateFriendView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
@@ -120,6 +140,10 @@ class CreateFriendView(LoginRequiredMixin, View):
         # Get the profiles involved in the friendship
         profile = Profile.objects.get(pk=self.kwargs['pk'])
         other_profile = Profile.objects.get(pk=self.kwargs['other_pk'])
+
+        # Check if the user is the owner of the profile
+        if profile.user != request.user:
+            return redirect('show_profile', pk=profile.pk)
         
         # Add the friend
         profile.add_friend(other_profile)
@@ -136,6 +160,14 @@ class ShowFriendSuggestionsView(DetailView):
         context = super().get_context_data(**kwargs)
         context['friend_suggestions'] = self.object.get_friend_suggestions()
         return context
+    
+    def dispatch(self, request, *args, **kwargs):
+        # Ensure the user is the owner of the profile
+        profile = self.get_object()
+        if profile.user != request.user:
+            return redirect('show_profile', pk=profile.pk)
+        
+        return super().dispatch(request, *args, **kwargs)
 
 class ShowNewsFeedView(DetailView):
     model = Profile
@@ -146,3 +178,11 @@ class ShowNewsFeedView(DetailView):
         context = super().get_context_data(**kwargs)
         context['news_feed'] = self.object.get_news_feed()
         return context
+    
+    def dispatch(self, request, *args, **kwargs):
+        # Ensure the user is the owner of the profile
+        profile = self.get_object()
+        if profile.user != request.user:
+            return redirect('show_profile', pk=profile.pk)
+        
+        return super().dispatch(request, *args, **kwargs)
