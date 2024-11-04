@@ -90,9 +90,13 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
     form_class = UpdateProfileForm
     template_name = 'mini_fb/update_profile_form.html'
 
+    def get_object(self):
+        # Return the profile object associated with the logged-in user
+        return Profile.objects.get(user=self.request.user)
+
     def get_success_url(self):
         '''Redirect to the profile page after updating a profile.'''
-        return reverse('show_profile', kwargs={'pk': self.kwargs['pk']})
+        return reverse('show_profile')
     
     def dispatch(self, request, *args, **kwargs):
         # Ensure the user is the owner of the profile

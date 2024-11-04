@@ -18,7 +18,7 @@
         <p><strong>Email:</strong> {{ profile.email }}</p>
         <br>
         {% if request.user == profile.user %}
-            <a href="{% url 'update_profile' profile.pk %}" class="update-profile-link">Update Profile</a>
+            <a href="{% url 'update_profile' %}" class="update-profile-link">Update Profile</a>
             <a href="{% url 'news_feed' profile.pk %}" class="news-feed-link">News Feed</a>
         {% endif %}
     </div>
@@ -55,7 +55,7 @@
 </div>
 
 <div class="status-messages">
-    
+
     <div class="status-title">
         <h4>Status Messages</h4>
         <!-- Link to the create status message page -->
