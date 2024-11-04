@@ -38,16 +38,22 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     form_class = CreateStatusMessageForm
     template_name = 'mini_fb/create_status_form.html'
 
+    # def get_object(self):
+    #     # Return the profile object associated with the logged-in user
+    #     return Profile.objects.get(user=self.request.user)
+
     def get_success_url(self):
         '''Redirect to the profile page after posting a status.'''
-        return reverse('show_profile', kwargs={'pk': self.kwargs['pk']})
+        profile = Profile.objects.get(user=self.request.user)
+        return reverse('show_profile', kwargs={'pk': profile.pk})
 
     def form_valid(self, form):
         '''Attach the status message to the correct profile.'''
 
         # find the profile with the PK from the URL
         # self.kwargs['pk'] is finding the profile PK from the URL
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        #profile = Profile.objects.get(pk=self.kwargs['pk'])
+        profile = Profile.objects.get(user=self.request.user)
 
         # attach the profile to the new Status 
         # (form.instance is the new Status object)
@@ -76,8 +82,9 @@ class CreateStatusMessageView(LoginRequiredMixin, CreateView):
 
         # find the profile with the PK from the URL
         # self.kwargs['pk'] is finding the profile PK from the URL
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
-
+        # profile = Profile.objects.get(pk=self.kwargs['pk'])
+        profile = Profile.objects.get(user=self.request.user)
+        
         # add the profile to the context data
         context['profile'] = profile  # Add it to the context
         return context
@@ -152,7 +159,8 @@ class CreateFriendView(LoginRequiredMixin, View):
             return self.handle_no_permission()  # Redirects to login page if user is not authenticated
         
         # Get the profiles involved in the friendship
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        profile = Profile.objects.get(user=self.request.user)
+        
         other_profile = Profile.objects.get(pk=self.kwargs['other_pk'])
 
         # Check if the user is the owner of the profile
@@ -169,6 +177,10 @@ class ShowFriendSuggestionsView(DetailView):
     model = Profile
     template_name = 'mini_fb/friend_suggestions.html'
     context_object_name = 'profile'
+
+    def get_object(self):
+        # Return the profile object associated with the logged-in user
+        return Profile.objects.get(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -187,6 +199,10 @@ class ShowNewsFeedView(DetailView):
     model = Profile
     template_name = 'mini_fb/news_feed.html'
     context_object_name = 'profile'
+
+    def get_object(self):
+        # Return the profile object associated with the logged-in user
+        return Profile.objects.get(user=self.request.user)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -13,7 +13,7 @@
                 <p>No Image Available</p>
             {% endif %}
             <p><strong>{{ suggestion.first_name }} {{ suggestion.last_name }}</strong></p>
-            <a href="{% url 'add_friend' profile.pk suggestion.pk %}">Add Friend</a>
+            <a href="{% url 'add_friend' suggestion.pk %}">Add Friend</a>
         </div>
     {% endfor %}
 </div>

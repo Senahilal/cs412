@@ -19,7 +19,7 @@
         <br>
         {% if request.user == profile.user %}
             <a href="{% url 'update_profile' %}" class="update-profile-link">Update Profile</a>
-            <a href="{% url 'news_feed' profile.pk %}" class="news-feed-link">News Feed</a>
+            <a href="{% url 'news_feed' %}" class="news-feed-link">News Feed</a>
         {% endif %}
     </div>
 
@@ -31,7 +31,7 @@
         <h4>Friends</h4>
         <!-- Link to the create status message page -->
         {% if request.user == profile.user %}
-        <small><a href="{% url 'friend_suggestions' profile.pk %}">See Friend Suggestions</a></small>
+        <small><a href="{% url 'friend_suggestions' %}">See Friend Suggestions</a></small>
         {% endif %}
     </div>
     <br>
@@ -60,7 +60,7 @@
         <h4>Status Messages</h4>
         <!-- Link to the create status message page -->
         {% if request.user == profile.user %}
-            <small><a href="{% url 'create_status' profile.pk %}">Add a new status</a></small>
+            <small><a href="{% url 'create_status' %}">Add a new status</a></small>
         {% endif %}
     </div>
 
