@@ -102,8 +102,9 @@ class UpdateProfileView(LoginRequiredMixin, UpdateView):
         return Profile.objects.get(user=self.request.user)
 
     def get_success_url(self):
-        '''Redirect to the profile page after updating a profile.'''
-        return reverse('show_profile')
+        '''Redirect to the profile page after posting a status.'''
+        profile = Profile.objects.get(user=self.request.user)
+        return reverse('show_profile', kwargs={'pk': profile.pk})
     
     def dispatch(self, request, *args, **kwargs):
         # Ensure the user is the owner of the profile
