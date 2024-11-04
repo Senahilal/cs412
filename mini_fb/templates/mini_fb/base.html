@@ -29,12 +29,19 @@ Put common code here, specific code in separate pages
 
         <main>
             <div>
-                {% if request.user.is_authenticated %}
+                {% if user.is_authenticated %}
                     Logged in user: {{request.user}}
+                    
+                    <form method="POST" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit">Logout</button>
+                    </form>
                 {% else %}
-                    Not logged in.
+                    <a href="{% url 'login' %}">Login</a>
                 {% endif %}
             </div>
+
+            
 
             {% block content %}
             <!-- show_all here -->
