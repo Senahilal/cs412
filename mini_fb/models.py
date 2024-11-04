@@ -15,7 +15,8 @@ class Profile(models.Model):
     image_url = models.URLField(blank=True) 
 
     #associate each Profile with an User for authentication and identification purposes
-    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    #, null=True, blank=True
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         '''Return a string representation of this Profile.'''

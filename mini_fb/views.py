@@ -112,7 +112,9 @@ class DeleteStatusMessageView(LoginRequiredMixin, DeleteView):
         status = self.get_object()
         # Ensure the status belongs to the user's profile
         if status.profile.user != request.user:
-            return redirect('show_profile', pk=status.profile.pk)
+            return redirect('show_profile', pk=self.object.profile.pk)
+        
+        return super().dispatch(request, *args, **kwargs)
 
 class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
     model = StatusMessage
@@ -128,7 +130,9 @@ class UpdateStatusMessageView(LoginRequiredMixin, UpdateView):
         status = self.get_object()
         # Ensure the status belongs to the user's profile
         if status.profile.user != request.user:
-            return redirect('show_profile', pk=status.profile.pk)
+            return redirect('show_profile', pk=self.object.profile.pk)
+        
+        return super().dispatch(request, *args, **kwargs)
 
 class CreateFriendView(LoginRequiredMixin, View):
     def dispatch(self, request, *args, **kwargs):
