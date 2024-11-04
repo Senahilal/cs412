@@ -165,8 +165,9 @@ table a{
     font-size: calc(3px + 1vw);    
 }
 
-.status-messages li{
+.status-messages ul li{
     list-style-type: none; /*Removing dots from list items */
+    padding: 10px;
 }
 
 .status-date{
