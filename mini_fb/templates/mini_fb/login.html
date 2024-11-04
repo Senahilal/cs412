@@ -1,0 +1,15 @@
+<!-- mini_fb/templates/mini_fb/login.html -->
+{% extends 'mini_fb/base.html' %}
+
+{% block content %}
+<h1>Login</h1>
+
+<form method="POST" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Login">
+</form>
+
+<br>
+Don't have an account? <a href="">Register here</a>.
+{% endblock %}
