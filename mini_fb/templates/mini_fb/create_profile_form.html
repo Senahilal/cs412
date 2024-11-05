@@ -13,8 +13,14 @@
     <!-- display as table -->
     <!-- {{form.as_table}} -->
 
-    <!-- display as paragraphs -->
+    <!-- Display fields from the CreateProfileForm -->
+    <h3>Profile Information</h3>
     {{ form.as_p }}
+
+    <!-- Display fields from the UserCreationForm -->
+    <h4>Registration</h4>
+    {{ user_creation_form.as_table }}
+    
     <button type="submit">Create Profile</button>
 </form>
 

@@ -33,14 +33,39 @@ class CreateProfileView(CreateView):
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
 
+    def get_context_data(self, **kwargs: Any):
+        '''Add both forms to the context for display in the template.'''
+        context = super().get_context_data(**kwargs)
+        # Pass an unbound UserCreationForm instance to the template
+        context['user_creation_form'] = UserCreationForm()
+        return context
+
+    def form_valid(self, form):
+        '''Handle form submission for both Profile and UserCreationForm.'''
+        # Recreate the UserCreationForm with POST data
+        user_creation_form = UserCreationForm(self.request.POST)
+
+        # Validate both forms
+        if user_creation_form.is_valid():
+            # Save the UserCreationForm to create a new user
+            user = user_creation_form.save()
+
+            # Attach the newly created user to the profile instance (form.instance)
+            form.instance.user = user
+            
+            # Save the Profile instance
+            self.object = form.save()
+
+            # Delegate the rest to the superclass
+            return super().form_valid(form)
+        else:
+            # If user creation form is invalid, re-render with errors
+            return self.form_invalid(form)
+
 class CreateStatusMessageView(LoginRequiredMixin, CreateView):
     model = StatusMessage
     form_class = CreateStatusMessageForm
     template_name = 'mini_fb/create_status_form.html'
-
-    # def get_object(self):
-    #     # Return the profile object associated with the logged-in user
-    #     return Profile.objects.get(user=self.request.user)
 
     def get_success_url(self):
         '''Redirect to the profile page after posting a status.'''
