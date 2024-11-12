@@ -5,3 +5,6 @@ from django.conf import settings
 from . import views
 from django.contrib.auth import views as auth_views
 
+urlpatterns =[
+    path('', views.VoterListView.as_view(), name='voters'),
+]

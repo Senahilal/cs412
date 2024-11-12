@@ -49,16 +49,16 @@ def load_data():
 
             # Create a new Voter instance
             voter = Voter(
-                voter_id=fields[0],  # Assuming Voter ID Number is the first column
+                voter_id=fields[0].strip(),  # Assuming Voter ID Number is the first column
                 last_name=fields[1],
                 first_name=fields[2],
-                street_number=fields[3],
+                street_number=fields[3].strip(),
                 street_name=fields[4],
                 apartment_number=fields[5] if fields[5] else None,  # Handle empty fields
-                zip_code=fields[6],
+                zip_code=fields[6].strip(),
                 date_of_birth=fields[7],
                 date_of_registration=fields[8],
-                party_affiliation=fields[9],
+                party_affiliation=fields[9].strip(),
                 precinct_number=fields[10],
                 v20state=fields[11].strip().lower() == 'true',
                 v21town=fields[12].strip().lower() == 'true',
@@ -70,7 +70,7 @@ def load_data():
 
             # Save the instance to the database
             voter.save()
-            print(f'Created voter: {voter}')
+            #print(f'Created voter: {voter}')
 
         except Exception as e:
             print(f"Exception occurred with fields: {fields}. Error: {e}")
