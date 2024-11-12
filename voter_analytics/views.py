@@ -29,10 +29,10 @@ class VoterListView(ListView):
                 qs = qs.filter(party_affiliation=self.form.cleaned_data['party_affiliation'])
 
             if self.form.cleaned_data['min_date_of_birth']:
-                qs = qs.filter(date_of_birth__gte=self.form.cleaned_data['min_date_of_birth'])
-
+                qs = qs.filter(date_of_birth__year__gte=self.form.cleaned_data['min_date_of_birth'])
+        
             if self.form.cleaned_data['max_date_of_birth']:
-                qs = qs.filter(date_of_birth__lte=self.form.cleaned_data['max_date_of_birth'])
+                qs = qs.filter(date_of_birth__year__lt=self.form.cleaned_data['max_date_of_birth'])
 
             if self.form.cleaned_data['voter_score']:
                 qs = qs.filter(voter_score=self.form.cleaned_data['voter_score'])
@@ -57,7 +57,7 @@ class VoterListView(ListView):
     def get_context_data(self, **kwargs):
         '''Add the form to the context.'''
         context = super().get_context_data(**kwargs)
-        
+
         # Add the form to the context
         context['form'] = self.form  
         return context
