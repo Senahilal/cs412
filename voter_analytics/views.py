@@ -24,35 +24,48 @@ class VoterListView(ListView):
         self.form = SearchVotersForm(self.request.GET)
 
         if self.form.is_valid():
+            
+            # Filtering logic based on GET parameters
+            party_affiliation = self.request.GET.get('party_affiliation')
+            min_date_of_birth = self.request.GET.get('min_date_of_birth')
+            max_date_of_birth = self.request.GET.get('max_date_of_birth')
+            voter_score = self.request.GET.get('voter_score')
+            voted_v20state = self.request.GET.get('voted_v20state')
+            voted_v21town = self.request.GET.get('voted_v21town')
+            voted_v21primary = self.request.GET.get('voted_v21primary')
+            voted_v22general = self.request.GET.get('voted_v22general')
+            voted_v23town = self.request.GET.get('voted_v23town')
+
             # Apply filters based on form input
-            if self.form.cleaned_data['party_affiliation']:
-                qs = qs.filter(party_affiliation=self.form.cleaned_data['party_affiliation'])
+            if party_affiliation:
+                qs = qs.filter(party_affiliation=party_affiliation)
 
-            if self.form.cleaned_data['min_date_of_birth']:
-                qs = qs.filter(date_of_birth__year__gte=self.form.cleaned_data['min_date_of_birth'])
-        
-            if self.form.cleaned_data['max_date_of_birth']:
-                qs = qs.filter(date_of_birth__year__lt=self.form.cleaned_data['max_date_of_birth'])
+            if min_date_of_birth:
+                qs = qs.filter(date_of_birth__year__gte=min_date_of_birth)
 
-            if self.form.cleaned_data['voter_score']:
-                qs = qs.filter(voter_score=self.form.cleaned_data['voter_score'])
+            if max_date_of_birth:
+                qs = qs.filter(date_of_birth__year__lte=max_date_of_birth)
 
-            if self.form.cleaned_data['voted_v20state']:
+            if voter_score:
+                qs = qs.filter(voter_score=voter_score)
+
+            if voted_v20state:
                 qs = qs.filter(v20state=True)
 
-            if self.form.cleaned_data['voted_v21town']:
+            if voted_v21town:
                 qs = qs.filter(v21town=True)
 
-            if self.form.cleaned_data['voted_v21primary']:
+            if voted_v21primary:
                 qs = qs.filter(v21primary=True)
 
-            if self.form.cleaned_data['voted_v22general']:
+            if voted_v22general:
                 qs = qs.filter(v22general=True)
 
-            if self.form.cleaned_data['voted_v23town']:
+            if voted_v23town:
                 qs = qs.filter(v23town=True)
 
         return qs
+
 
     def get_context_data(self, **kwargs):
         '''Add the form to the context.'''
@@ -67,3 +80,72 @@ class ShowVoterPageView(DetailView):
     model = Voter
     template_name = 'voter_analytics/show_voter.html'
     context_object_name = 'voter'
+
+
+class VoterGraphsView(ListView):
+    '''View to display a graphs'''
+    model = Voter
+    template_name = 'voter_analytics/graphs.html'
+    context_object_name = 'voters'
+
+    def get_queryset(self):
+        '''Return the filtered set of Voter records.'''
+
+        # Start with the base queryset
+        qs = super().get_queryset()
+
+        # Instantiate the form with GET parameters
+        self.form = SearchVotersForm(self.request.GET)
+
+        if self.form.is_valid():
+            
+            # Filtering logic based on GET parameters
+            party_affiliation = self.request.GET.get('party_affiliation')
+            min_date_of_birth = self.request.GET.get('min_date_of_birth')
+            max_date_of_birth = self.request.GET.get('max_date_of_birth')
+            voter_score = self.request.GET.get('voter_score')
+            voted_v20state = self.request.GET.get('voted_v20state')
+            voted_v21town = self.request.GET.get('voted_v21town')
+            voted_v21primary = self.request.GET.get('voted_v21primary')
+            voted_v22general = self.request.GET.get('voted_v22general')
+            voted_v23town = self.request.GET.get('voted_v23town')
+
+            # Apply filters based on form input
+            if party_affiliation:
+                qs = qs.filter(party_affiliation=party_affiliation)
+
+            if min_date_of_birth:
+                qs = qs.filter(date_of_birth__year__gte=min_date_of_birth)
+
+            if max_date_of_birth:
+                qs = qs.filter(date_of_birth__year__lte=max_date_of_birth)
+
+            if voter_score:
+                qs = qs.filter(voter_score=voter_score)
+
+            if voted_v20state:
+                qs = qs.filter(v20state=True)
+
+            if voted_v21town:
+                qs = qs.filter(v21town=True)
+
+            if voted_v21primary:
+                qs = qs.filter(v21primary=True)
+
+            if voted_v22general:
+                qs = qs.filter(v22general=True)
+
+            if voted_v23town:
+                qs = qs.filter(v23town=True)
+
+        return qs
+
+    def get_context_data(self, **kwargs):
+        '''Add the form to the context.'''
+        context = super().get_context_data(**kwargs)
+
+        # Add the form to the context
+        context['form'] = self.form 
+
+        
+        return context 

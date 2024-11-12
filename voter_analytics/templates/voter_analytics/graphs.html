@@ -2,7 +2,19 @@
 {% extends 'voter_analytics/base.html' %}
 
 {% block content %}
+<h2>Graphs</h2>
 
+<div class="form-container">
+    <h3>Search Form</h3><br>
+
+    <div></div>
+    
+    <form method="get">
+        {{ form.as_p }}
+        <button type="submit">Search</button>
+        <button><a href="{% url 'voters' %}">Reset Search</a></button>
+    </form>
+</div>
 
 
 {% endblock %}
