@@ -13,7 +13,7 @@ body{
 /* Header Styling */
 header {
     background-color: #2e8b57; /* Sea Green for a cohesive look */
-    color: #ffffff;
+    color: #f9f9f9;
     padding: 15px 20px;
     display: flex;
     justify-content: space-between;
@@ -50,32 +50,55 @@ nav a:hover {
 /* VOTER_LIST */
 .voter_list-title{
     color: #333333;
-    padding:10px 50px;
+    text-align: center;
+    padding: 10px;
 }
 
 .table-container {
+    width: 80%; /* Set container to 80% of the page */
     display: flex;
-    justify-content: center;
-    margin-top: 20px;
+    justify-content: center; 
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
 .voter-table {
-    width: 80%;
+    width: 100%;
     border-collapse: collapse;
     text-align: left;
 }
 
+/* Table Header Styling */
 .voter-table th {
     background-color: #2e8b57;
-    color: #ecf0f1;
+    border: 1px solid #2e8b57;
+    color: #f9f9f9;
     padding: 10px;
 }
 
 .voter-row {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     border: 1px solid #ddd;
 }
 
 .voter-table td, .voter-table th {
     padding: 20px;
+}
+
+
+/* FORM CONTAINER */
+.form-container {
+    width: 80%; 
+    margin: 20px auto; /* Center the container horizontally */
+    background-color: #f9f9f9; /* Light background to distinguish form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+}
+.form-container h3 {
+    color: #333; /* Dark gray for contrast */
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column; /* Stack form fields vertically */
+    gap: 10px; /* Space between fields */
 }
