@@ -3,7 +3,7 @@ import csv
 
 # Create your models here.
 class Voter(models.Model):
-    voter_id = models.CharField(max_length=12, primary_key=True)
+    voter_id = models.CharField(max_length=12)
     first_name = models.CharField(max_length=50, blank=False)
     last_name = models.CharField(max_length=50, blank=False)
     street_number = models.CharField(max_length=10)
@@ -70,7 +70,7 @@ def load_data():
 
             # Save the instance to the database
             voter.save()
-            #print(f'Created voter: {voter}')
+            print(f'Created voter: {voter}')
 
         except Exception as e:
             print(f"Exception occurred with fields: {fields}. Error: {e}")

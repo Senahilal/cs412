@@ -61,3 +61,9 @@ class VoterListView(ListView):
         # Add the form to the context
         context['form'] = self.form  
         return context
+
+class ShowVoterPageView(DetailView):
+    '''View to display a single Voter record.'''
+    model = Voter
+    template_name = 'voter_analytics/show_voter.html'
+    context_object_name = 'voter'

@@ -1,0 +1,58 @@
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+<h2>Voter Details</h2>
+
+<div class="voter-info-container">
+
+    <h3>Personal Information</h3>
+    <div>
+        <p>First Name:</p>
+        <p>{{ voter.first_name }}</p>
+    </div>
+    <div>
+        <p>Last Name:</p>
+        <p>{{ voter.last_name }}</p>
+    </div>
+
+    <div>
+        <p>Date of Birth:</p>
+        <p>{{ voter.date_of_birth }}</p>
+    </div>
+</div>
+
+<div class="voter-info-container">
+    <h3>Address</h3>
+    <div>
+        <p>Address:</p>
+        <p>{{ voter.street_number }} {{ voter.street_name }}{% if voter.apartment_number %}, Apt {{ voter.apartment_number }}{% endif %}, {{ voter.zip_code }}</p>
+    </div>
+    <!-- Google Maps Link -->
+    <p>
+        <a href="https://www.google.com/maps/search/{{ voter.street_number }}+{{ voter.street_name }}+{{ voter.zip_code }}/" target="_blank">
+            Open in Google Maps
+        </a>
+    </p>
+
+</div>
+
+<div class="voter-info-container">
+    <h3>Voting Information</h3>
+
+    <div>
+        <p>Party Affiliation:</p>
+        <p>{{ voter.party_affiliation }}</p>
+    </div>
+    <div>
+        <p>Voter Score:</p>
+        <p>{{ voter.voter_score }}</p>
+    </div>
+</div>
+
+
+
+<!-- Back to Voters List -->
+<button><a href="{% url 'voters' %}">Back to Voters List</a></button>
+
+{% endblock %}

@@ -7,4 +7,5 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns =[
     path('', views.VoterListView.as_view(), name='voters'),
+    path('voter/<int:pk>/', views.ShowVoterPageView.as_view(), name='voter_page'),
 ]

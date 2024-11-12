@@ -2,6 +2,7 @@
 {% extends 'voter_analytics/base.html' %}
 
 {% block content %}
+
 <div class="title-container">
     <h2 class="voter_list-title">Voters</h2>
 </div>
@@ -33,7 +34,7 @@
         </thead>
         <tbody>
             {% for voter in voters %}
-                <tr class="voter-row">
+                <tr class="voter-row" style="cursor: pointer;" onclick="location.href='{% url 'voter_page' voter.pk %}';">
                     <td>{{ voter.first_name }}</td>
                     <td>{{ voter.last_name }}</td>
                     <td>{{ voter.street_number }} {{ voter.street_name }}</td>

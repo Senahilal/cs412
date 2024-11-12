@@ -8,6 +8,16 @@
 body{
 }
 
+h2{
+    color: #333333;
+    text-align: center;
+    padding: 10px;
+}
+
+h3 {
+    color: #333333; /* Dark gray for contrast */
+}
+
 /* BASE */
 
 /* Header Styling */
@@ -93,12 +103,25 @@ nav a:hover {
     background-color: #f9f9f9; /* Light background to distinguish form */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
-.form-container h3 {
-    color: #333; /* Dark gray for contrast */
-}
 
 .form-container form {
     display: flex;
     flex-direction: column; /* Stack form fields vertically */
     gap: 10px; /* Space between fields */
+}
+
+
+
+
+
+
+
+/* Voter Page */
+
+.voter-info-container{
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
