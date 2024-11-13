@@ -34,8 +34,8 @@
         </thead>
         <tbody>
             {% for voter in voters %}
-                <tr class="voter-row" style="cursor: pointer;" onclick="location.href='{% url 'voter_page' voter.pk %}';">
-                    <td>{{ voter.first_name }}</td>
+                <tr class="voter-row">
+                    <td><a href="{% url 'voter_page' voter.pk %}">{{ voter.first_name }}</a></td>
                     <td>{{ voter.last_name }}</td>
                     <td>{{ voter.street_number }} {{ voter.street_name }}</td>
                     <td>{{ voter.date_of_birth }}</td>
