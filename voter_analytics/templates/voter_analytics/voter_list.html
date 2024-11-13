@@ -34,8 +34,8 @@
         </thead>
         <tbody>
             {% for voter in voters %}
-                <tr class="voter-row">
-                    <td><a href="{% url 'voter_page' voter.pk %}">{{ voter.first_name }}</a></td>
+                <tr class="voter-row" style="cursor: pointer;" onclick="location.href='{% url 'voter_page' voter.pk %}';">
+                    <td>{{ voter.first_name }}</td>
                     <td>{{ voter.last_name }}</td>
                     <td>{{ voter.street_number }} {{ voter.street_name }}</td>
                     <td>{{ voter.date_of_birth }}</td>
@@ -47,17 +47,17 @@
     </table>
 </div>
 <!-- Pagination -->
-<div>
+<div class="page-info">
     <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
     
     {% if page_obj.has_previous %}
-        <a href="?page=1">First</a>
-        <a href="?page={{ page_obj.previous_page_number }}">Prev</a>
+        <a href="?page=1">&lt&lt First</a>
+        <a href="?page={{ page_obj.previous_page_number }}"> &lt Prev</a>
     {% endif %}
 
     {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">Next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+        <a href="?page={{ page_obj.next_page_number }}"> Next &gt</a>
+        <a href="?page={{ page_obj.paginator.num_pages }}">Last &gt&gt</a>
     {% endif %}
 </div>
 

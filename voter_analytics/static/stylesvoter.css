@@ -101,6 +101,21 @@ nav a:hover {
     padding: 20px;
 }
 
+.page-info{
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    color:#333333;
+
+}
+
+.page-info a {
+    text-decoration: none;
+    color: #2e8b57; /* Match the theme */
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
 
 /* FORM CONTAINER */
 .form-container {

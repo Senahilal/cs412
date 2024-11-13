@@ -202,13 +202,6 @@ class VoterGraphsView(ListView):
         context['party_pie_chart'] = party_pie_chart.to_html(full_html=False)
 
 
-        voter_counts = (
-            self.get_queryset()
-            .values('voter_score')
-            .annotate(count=Count('voter_score'))
-            .order_by('voter_score')
-        )
-
         # Field names and voter counts
         election_fields_with_counts = {
             '2020 State Election': filtered_qs.filter(v20state=True).count(),
