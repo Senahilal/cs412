@@ -8,6 +8,11 @@
 body{
 }
 
+h1 a{
+    text-decoration: none;
+    color: #f9f9f9;
+}
+
 h2{
     color: #333333;
     text-align: center;
@@ -123,5 +128,18 @@ nav a:hover {
     margin: 20px auto;
     padding: 20px;
     background-color: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+
+
+
+
+/* Graphs Page */
+.graph-container{
+    width: 80%;
+    margin: 30px auto; /* Center the chart horizontally */
+    padding:5%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

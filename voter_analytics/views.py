@@ -5,7 +5,12 @@ from django.urls import reverse
 from . models import *
 from .forms import *
 from django.views.generic import *
+from django.db.models.functions import *
+from django.db.models import *
 from django.shortcuts import redirect
+import plotly
+import plotly.graph_objects as go
+import plotly.express as px
 
 # Create your views here.
 class VoterListView(ListView):
@@ -146,6 +151,85 @@ class VoterGraphsView(ListView):
 
         # Add the form to the context
         context['form'] = self.form 
+
+        # filtered queryset to get filtered data
+        filtered_qs = self.get_queryset()
+
+
+        # Query to get voter count by birth year
+        birth_year_counts = (
+            filtered_qs
+            .annotate(birth_year=ExtractYear('date_of_birth'))
+            .values('birth_year')
+            .annotate(count=Count('birth_year'))
+            .order_by('birth_year')
+        )
+
+        # Prepare x and y 
+        x_birth_years = [entry['birth_year'] for entry in birth_year_counts]
+        y_birth_counts = [entry['count'] for entry in birth_year_counts]
+
+        # Voter Birth Year Distribution graph
+        birth_year_histogram = px.bar(
+            x=x_birth_years,
+            y=y_birth_counts,
+            title='Voter Birth Year Distribution',
+            labels={'x': 'Birth Year', 'y': 'Number of Voters'}
+        )
+
+        # Convert figure to HTML and add it to the context
+        context['birth_year_chart'] = birth_year_histogram.to_html(full_html=False)
+
+
+        # Query to get voter count by party affiliation
+        party_counts = (
+            filtered_qs
+            .values('party_affiliation')
+            .annotate(count=Count('party_affiliation'))
+            .order_by('-count')
+        )
+
+        labels = [entry['party_affiliation'] for entry in party_counts]
+        values = [entry['count'] for entry in party_counts]
+
+        # Voter Party Affiliation Pie Chart
+        party_pie_chart = px.pie(
+            names=labels,
+            values=values,
+            title='Voter Distribution by Party',
+            labels={'names': 'Party Affiliation', 'values': 'Number of Voters'}
+        )
+        context['party_pie_chart'] = party_pie_chart.to_html(full_html=False)
+
+
+        voter_counts = (
+            self.get_queryset()
+            .values('voter_score')
+            .annotate(count=Count('voter_score'))
+            .order_by('voter_score')
+        )
+
+        # Field names and voter counts
+        election_fields_with_counts = {
+            '2020 State Election': filtered_qs.filter(v20state=True).count(),
+            '2021 Town Election': filtered_qs.filter(v21town=True).count(),
+            '2021 Primary Election': filtered_qs.filter(v21primary=True).count(),
+            '2022 General Election': filtered_qs.filter(v22general=True).count(),
+            '2023 Town Election': filtered_qs.filter(v23town=True).count(),
+        }
+
+        x_elections = list(election_fields_with_counts.keys())  # Labels
+        y_vote_counts = list(election_fields_with_counts.values())  # Counts
+
+        # Vote Count by Election
+        election_bar_chart = px.bar(
+            x=x_elections,
+            y=y_vote_counts,
+            title=f'Vote Count by Election (n={filtered_qs.count()})',
+            labels={'x': 'Election', 'y': 'Number of Voters'}
+        )
+
+        context['election_chart'] = election_bar_chart.to_html(full_html=False)
 
         
         return context 

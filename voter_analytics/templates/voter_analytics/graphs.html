@@ -12,8 +12,21 @@
     <form method="get">
         {{ form.as_p }}
         <button type="submit">Search</button>
-        <button><a href="{% url 'voters' %}">Reset Search</a></button>
+        <button><a href="{% url 'graphs' %}">Reset Search</a></button>
     </form>
+</div>
+
+<div class="graph-container">
+    {{ birth_year_chart|safe }}
+</div>
+
+<div class="graph-container">
+
+    {{party_pie_chart|safe}}
+</div>
+
+<div class="graph-container">
+    {{election_chart|safe}}
 </div>
 
 
