@@ -1,0 +1,17 @@
+<!-- project/templates/project/create_player_form.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>Create a Player Account</h2>
+<br>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br>
+    {{ user_creation_form.as_table }}
+    <input type="submit" value="Create Player">
+</form>
+
+{% endblock %}
+
+

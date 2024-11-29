@@ -1,0 +1,21 @@
+<!-- project/templats/project/login.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h1>Login</h1>
+
+<form method="POST" action="{% url 'project_login' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="hidden" name="next" value="{% url 'show_all_matches' %}">
+    <input type="submit" value="Login">
+</form>
+
+<br>
+<p>Don't have an account?</p>
+<ul>
+    <li><a href="{% url 'create_player' %}">Register as Player</a></li>
+    <li><a href="{% url 'create_manager' %}">Register as Manager</a></li>
+</ul>
+
+{% endblock %}

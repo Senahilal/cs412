@@ -1,0 +1,15 @@
+<!-- project/templats/project/show_player.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>{{ player.first_name }} {{ player.last_name }}</h2>
+<p><strong>Position:</strong> {{ player.position }}</p>
+<p><strong>Number:</strong> {{ player.number }}</p>
+{% if player.profile_image_file %}
+    <img src="{{ player.profile_image_file.url }}" alt="Profile Picture" style="width:200px;height:auto;">
+{% else %}
+    <p>No profile picture available.</p>
+{% endif %}
+
+<a href="{% url 'show_team' player.playsin_set.first.team.pk %}">Back to Team</a>
+{% endblock %}

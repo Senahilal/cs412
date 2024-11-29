@@ -1,0 +1,22 @@
+<!-- project/templats/project/show_all_matches.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<h2>All Matches</h2>
+<br>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>City/Country</th>
+        <th>Head Coach</th>
+        <!-- Games won/lost -->
+    </tr>
+    {% for team in teams %}
+    <tr>
+        <td><a href="{% url 'show_team' team.pk %}">{{ team.name }}</a></td>
+        <td>{{ team.city }}/{{team.country}}</td>
+        <td>{{ team.manager }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
