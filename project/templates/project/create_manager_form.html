@@ -2,16 +2,20 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<h2>Create a Manager Account</h2>
-<br>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    
-    <h3>Create a User Account</h3>
-    {{ user_creation_form.as_p }}
-    
-    <input type="submit" value="Register Manager">
-</form>
+<div class="create-manager-container">
+    <h2>Create a Manager Account</h2>
+    <form method="POST" class="create-manager-form">
+        {% csrf_token %}
+        
+        <div class="form-section">
+            {{ form.as_p }}
+        </div>
 
+        <div class="form-section">
+            {{ user_creation_form.as_table }}
+        </div>
+        
+        <button type="submit" class="create-manager-button">Register Manager</button>
+    </form>
+</div>
 {% endblock %}

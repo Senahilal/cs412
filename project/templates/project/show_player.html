@@ -2,14 +2,24 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<h2>{{ player.first_name }} {{ player.last_name }}</h2>
-<p><strong>Position:</strong> {{ player.position }}</p>
-<p><strong>Number:</strong> {{ player.number }}</p>
-{% if player.profile_image_file %}
-    <img src="{{ player.profile_image_file.url }}" alt="Profile Picture" style="width:200px;height:auto;">
-{% else %}
-    <p>No profile picture available.</p>
-{% endif %}
+<div class="player-container">
+    <div class="player-header">
+        <h2>{{ player.first_name }} {{ player.last_name }}</h2>
+    </div>
+    
+    <div class="player-details">
+        <p><strong>Position:</strong> {{ player.position }}</p>
+        <p><strong>Number:</strong> {{ player.number }}</p>
+    </div>
 
-<a href="{% url 'show_team' player.playsin_set.first.team.pk %}">Back to Team</a>
+    <div class="player-image">
+        {% if player.profile_image_file %}
+            <img src="{{ player.profile_image_file.url }}" alt="Profile Picture">
+        {% else %}
+            <p>No profile picture available.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'show_team' player.playsin_set.first.team.pk %}" class="back-button">Back to Team</a>
+</div>
 {% endblock %}

@@ -1,0 +1,494 @@
+/* Playfair Display */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+*{
+    margin:0;
+    padding: 0;
+    /* font-family: Arial, Helvetica, sans-serif; */
+    /* font-family: 'Playfair Display', serif; */
+    font-family: medium-content-sans-serif-font, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+body
+{
+    background: linear-gradient(to bottom, #ebe8e8);
+    font-size: 18px;
+}
+
+main{
+    min-height: 100vh;
+}
+
+footer{
+    background-color: #d40210;
+    min-height: 20vh;
+    color: #ffffff;
+    /* aligning content center both vertically and horizontally */
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+
+footer a{
+    color: #333;
+    text-decoration: none;
+}
+
+.navbar {
+    background-color: #d40210; 
+    padding: 10px; /* Padding inside the navbar */
+    border-radius: 25px; /* Rounded edges for the navbar */
+    margin: 10px 20px;
+    display: flex; /* Using flexbox to control alignment */
+    justify-content: flex-end; /* Align items to the right */
+}
+
+.navbar ul {
+    list-style: none; /* Removing bullet points from list */
+    display: flex;
+    gap: 20px; /* Add spacing between links */
+    padding: 5px;
+}
+
+.navbar li {
+    display: inline; /* Displaying list items inline */
+}
+
+.navbar a {
+    text-decoration: none; /* Remove underline*/
+    color: #ffffff; 
+    font-weight: bold;
+}
+
+/*List of MATCHES PAGE */
+.matches-container {
+    display: flex;
+    flex-direction: column; /* Arrange match rows vertically */
+    gap: 15px; /* Add space between rows */
+    padding: 10px;
+    margin: 20px auto; /* Top-bottom:20px & Center the container horizontally */
+    max-width: 80%; 
+}
+
+.match-row {
+    background-color: #ffffff;
+    border: 2px solid #d40210; /* Border color matching the navbar*/
+    border-radius: 15px; /* Rounded edges */
+    padding: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    font-size: 16px; /* Adjust font size */
+}
+
+.match-row p {
+    margin: 5px 0; /* Add spacing between paragraphs */
+}
+
+.match-row strong {
+    color: #d40210; /*strong labels in red */
+}
+
+
+/* List of TEAMS PAGE */
+
+.teams-table {
+    width: 80%; /* Set table width to 80% of the page */
+    margin: 25px auto; /* Center the table horizontally */
+    border-collapse: collapse; /* Remove default table spacing */
+    text-align: left; /* Align text to the left */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
+    border-radius: 10px; /* Rounded edges for the table */
+    overflow: hidden; /* Prevent the border from breaking */
+}
+
+.teams-table thead tr {
+    background-color: #d40210; /* Turkish volleyball red */
+    color: #ffffff; /* White text */
+    font-weight: bold; /* Bold text for headers */
+}
+
+.teams-table th, .teams-table td {
+    padding: 12px 15px; /* Add padding inside cells */
+    border: 1px solid #e3e3e3; /* Light gray border for cell separation */
+}
+
+.teams-table tbody tr {
+    background-color: #ffffff; /* White background for rows */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+.teams-table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9; /* Slightly lighter gray for even rows */
+}
+
+.teams-table tbody tr:hover {
+    background-color: #ffe6e6; /* Light red highlight on hover */
+}
+
+.teams-table a {
+    color: #d40210;
+    text-decoration: none; 
+    font-weight: bold;
+}
+
+.teams-table a:hover {
+    text-decoration: underline; /* Add underline on hover */
+}
+
+/* LOGIN Page */
+
+.login-container {
+    max-width: 400px; /* Restrict the login form's width */
+    margin: 50px auto; /* Center the form on the page */
+    padding: 20px;
+    background-color: #ffffff; 
+    border-radius: 15px; /* Rounded edges for the form */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /*box shadow for depth */
+    text-align: center; /* Center-align text */
+}
+
+.login-container h1 {
+    color: #d40210; /* Red for the heading */
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+    gap: 15px; /* Add space between form elements */
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"],
+.login-form button {
+    padding: 10px; /* Add padding for better usability */
+    font-size: 16px; /* Adjust font size */
+    border-radius: 10px; /* Rounded edges for inputs and button */
+    border: 1px solid #ddd; /* Light border for inputs */
+    width: 100%; /* Full width of the container */
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+.login-form button {
+    background-color: #d40210; /* Red button */
+    color: #ffffff; /* White text */
+    border: none; /* Remove border */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-weight: bold;
+    transition: background-color 0.3s ease; /* Smooth hover transition */
+}
+
+.login-form button:hover {
+    background-color: #bc030f; /* Darker red on hover */
+}
+
+.register-links {
+    margin-top: 20px; /* Space above the links */
+    text-align: left; /* Align links to the left */
+}
+
+.register-links ul{
+    list-style: none;
+}
+
+.register-links p {
+    font-size: 16px;
+    color: #333; /* Neutral text color */
+    margin-bottom: 10px;
+}
+
+.register-links a {
+    color: #bc030f; /* Red links */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold;
+}
+
+.register-links a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+
+
+/* TEAM PAGE */
+.team-container {
+    max-width: 800px; /* Restrict width for readability */
+    margin: 30px auto; /* Center the content on the page */
+    padding: 20px;
+    background-color: #ffffff; /* White background for the content */
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.team-header {
+    text-align: center; /* Center the team name and details */
+    color: #d40210; /* Red for the team header */
+    margin-bottom: 20px; /* Add space below the header */
+}
+
+.team-header h2 {
+    font-size: 28px; /* Larger font for the team name */
+    margin-bottom: 10px;
+}
+
+.team-header p {
+    font-size: 16px; /* Adjust font size for team details */
+    margin: 5px 0;
+}
+
+.team-players h3 {
+    color: #d40210; /* Red for the "Players" heading */
+    margin-bottom: 10px;
+}
+
+.team-players ul {
+    list-style: none; /* Remove default bullet points */
+    padding: 0;
+}
+
+.team-players li {
+    margin-bottom: 10px; /* Add space between players */
+    font-size: 16px;
+}
+
+.team-players a {
+    color: #d40210; /* Red for player links */
+    text-decoration: none; /* Remove underline */
+    font-weight: bold;
+}
+
+.team-players a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+.back-button {
+    display: inline-block; /* Make the button inline */
+    margin-top: 20px; /* Space above the back button */
+    padding: 10px 15px; /* Add padding for button */
+    background-color: #d40210; /* Red background */
+    color: #ffffff; /* White text */
+    border-radius: 8px; /* Rounded edges */
+    text-decoration: none; /* Remove underline */
+    font-size: 16px;
+    text-align: center;
+}
+
+.back-button:hover {
+    background-color: #bc030f; /* Darker red on hover */
+}
+
+
+/* PLAYER PAGE */
+.player-container {
+    max-width: 600px; /* Restrict width for better readability */
+    margin: 30px auto; /* Center the content */
+    padding: 20px;
+    background-color: #ffffff; /* White background for contrast */
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center align the content */
+}
+
+.player-header h2 {
+    color: #d40210; /* Red color for the header */
+    font-size: 28px; /* Larger font for the player's name */
+    margin-bottom: 20px; /* Space below the name */
+}
+
+.player-details p {
+    font-size: 18px; /* Font size for player details */
+    margin: 10px 0; /* Spacing between details */
+}
+
+.player-details strong {
+    color: #d40210; /* Highlight labels in red */
+}
+
+.player-image img {
+    width: 200px; /* Fixed width for profile image */
+    height: auto; /* Maintain aspect ratio */
+    border-radius: 50%; /* Circular image */
+    border: 3px solid #d40210; /* Red border for the image */
+    margin: 20px 0; /* Space around the image */
+}
+
+.back-button {
+    display: inline-block; /* Inline button */
+    margin-top: 20px; /* Space above the back button */
+    padding: 10px 15px; /* Padding inside the button */
+    background-color: #d40210; /* Red background */
+    color: #ffffff; /* White text */
+    border-radius: 8px; /* Rounded edges */
+    text-decoration: none; /* Remove underline */
+    font-size: 16px; /* Font size for the button */
+    font-weight: bold;
+    text-align: center;
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.back-button:hover {
+    background-color: #bc030f; /* Darker red on hover */
+}
+
+
+/* Create Player Page */
+.create-player-container {
+    max-width: 600px;
+    margin: 30px auto; 
+    padding: 20px; /* Add padding */
+    background-color: #ffffff; /* White background for contrast */
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center-align content */
+}
+
+.create-player-container h2 {
+    color: #d40210; /* Red for the heading */
+    font-size: 24px; /* Slightly larger font for the title */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+.create-player-form {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.create-player-form .form-section {
+    text-align: left; /* Align form fields to the left */
+}
+
+/* styling for input boxes */
+.create-player-form input[type="text"],
+.create-player-form input[type="password"],
+.create-player-form input[type="number"],
+.create-player-form input[type="file"],
+.create-player-form select {
+    width: 100%; /* Full width of the container */
+    padding: 10px; 
+    font-size: 16px; /* Adjust font size */
+    border: 1px solid #ddd; /* Light border for inputs */
+    border-radius: 8px;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Highlight the box when the box is focused */
+.create-player-form input[type="text"]:focus,
+.create-player-form input[type="password"]:focus,
+.create-player-form input[type="file"]:focus,
+.create-player-form input[type="number"]:focus,
+.create-player-form select:focus {
+    border-color: #d40210;
+    outline: none; /* Remove default black outline */
+    box-shadow: 0 0 4px rgba(212, 2, 16, 0.5); /*red shadow for glow effect */
+}
+
+
+/* Putting space after every label&input pairs */
+.create-player-form p{
+    margin-bottom: 20px;
+}
+
+.helptext {
+    display: block; /* Convert span to block-level element so we can apply margin*/
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.create-player-form span ul{
+    list-style: none;
+}
+
+.create-player-button {
+    background-color: #d40210; /* Red background for the button */
+    color: #ffffff; /* White text */
+    font-size: 16px; /* Font size */
+    padding: 10px 15px; /* Add padding */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded edges */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.create-player-button:hover {
+    background-color: #bc030f; /* Darker red on hover */
+}
+
+
+/* CREATE MANAGER PAGE*/
+
+.create-manager-container { /* styling for container */
+    max-width: 600px;
+    margin: 30px auto; /* Center the form */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center;
+}
+
+.create-manager-container h2 {
+    color: #d40210; /* Red for the heading */
+    font-size: 24px; /*larger font for the title */
+    margin-bottom: 20px;
+}
+
+.create-manager-form {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+}
+
+.create-manager-form .form-section {
+    text-align: left; /* Align form fields to the left */
+}
+
+/* Styling input fields and select boxes */
+.create-manager-form input[type="text"],
+.create-manager-form input[type="password"],
+.create-manager-form input[type="file"],
+.create-manager-form input[type="email"],
+.create-manager-form select {
+    width: 100%; /* Full width of the container */
+    padding: 10px; 
+    font-size: 16px; 
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box; /* Include padding in width calculation */
+}
+
+/* Highlight input fields on focus */
+.create-manager-form input[type="text"]:focus,
+.create-manager-form input[type="password"]:focus,
+.create-manager-form input[type="file"]:focus,
+.create-manager-form input[type="email"]:focus,
+.create-manager-form select:focus {
+    border-color: #d40210;
+    outline: none; 
+    box-shadow: 0 0 4px rgba(212, 2, 16, 0.5); /* shadow for glow effect */
+}
+
+/* Space between label-input pairs */
+.create-manager-form p {
+    margin-bottom: 20px; 
+}
+
+/* Removing bulletpoints from the list */
+.create-manager-form ul{
+    list-style: none;
+    font-size: 14px;
+}
+
+.create-manager-button {
+    background-color: #d40210; /* Red background for the button */
+    color: #ffffff; /* text color */
+    font-size: 16px;
+    padding: 10px 15px; /* Add padding */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded edges */
+    cursor: pointer; /* Pointer cursor*/
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+.create-manager-button:hover {
+    background-color: #bc030f; /* Darker red on hover */
+}

@@ -2,23 +2,30 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<h2>{{ team.name }}</h2>
-<p><strong>City:</strong> {{ team.city }}</p>
-<p><strong>Country:</strong> {{ team.country }}</p>
-<p><strong>Head Coach:</strong> {{ team.manager.first_name }} {{ team.manager.last_name }}</p>
+<div class="team-container">
+    <div class="team-header">
+        <h2>{{ team.name }}</h2>
+        <p><strong>City:</strong> {{ team.city }}</p>
+        <p><strong>Country:</strong> {{ team.country }}</p>
+        <p><strong>Head Coach:</strong> {{ team.manager.first_name }} {{ team.manager.last_name }}</p>
+    </div>
 
-<h3>Players</h3>
-<ul>
-    {% for player in players %}
-    <li>
-        <a href="{% url 'show_player' player.pk %}">
-            {{ player.first_name }} {{ player.last_name }}
-        </a> - {{ player.position }}
-    </li>
-    {% empty %}
-    <p>No players are currently part of this team.</p>
-    {% endfor %}
-</ul>
+    <div class="team-players">
+        <h3>Players</h3>
+        <ul>
+            {% for player in players %}
+            <li>
+                <a href="{% url 'show_player' player.pk %}">
+                    {{ player.first_name }} {{ player.last_name }}
+                </a> - {{ player.position }}
+            </li>
+            {% empty %}
+            <p>No players are currently part of this team.</p>
+            {% endfor %}
+        </ul>
+    </div>
 
-<a href="{% url 'show_all_teams' %}">Back to All Teams</a>
+    <a href="{% url 'show_all_teams' %}" class="back-button">Back to All Teams</a>
+</div>
 {% endblock %}
+

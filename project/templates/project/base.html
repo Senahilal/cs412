@@ -11,7 +11,7 @@ This is base page from which all other pages will inherit.
 
     <body>
         <header>
-            <nav>
+            <nav class="navbar">
                 <ul>
                     <li><a href="{% url 'show_all_matches' %}">Matches</a></li>
                     <li><a href="{% url 'show_all_teams' %}">Teams</a></li>
@@ -29,7 +29,7 @@ This is base page from which all other pages will inherit.
                         </li>
                         
                     {% else %}
-                        <li><a href="{% url 'project_login' %}">Login/Register</a></li>
+                        <li><a href="{% url 'project_login' %}" id="logout-button">Login/Register</a></li>
                     {% endif %}
                 </ul>
             </nav>
@@ -42,6 +42,12 @@ This is base page from which all other pages will inherit.
             {% endblock %}
 
         </main>
+
+        <footer>
+            <div>
+                <p>All Rights Reserved By Sena Bayram <a href="">Credits</a>&copy;</p>
+            </div>
+        </footer>
 
     </body>
 </html>

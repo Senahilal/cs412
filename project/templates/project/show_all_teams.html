@@ -2,21 +2,25 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<h2>All Matches</h2>
-<br>
-<table>
-    <tr>
-        <th>Name</th>
-        <th>City/Country</th>
-        <th>Head Coach</th>
-        <!-- Games won/lost -->
-    </tr>
-    {% for team in teams %}
-    <tr>
-        <td><a href="{% url 'show_team' team.pk %}">{{ team.name }}</a></td>
-        <td>{{ team.city }}/{{team.country}}</td>
-        <td>{{ team.manager }}</td>
-    </tr>
-    {% endfor %}
+
+<table class="teams-table">
+    <thead>
+        <tr>
+            <th>Team</th>
+            <th>City / Country</th>
+            <th>Head Coach</th>
+            <!-- Games won/lost -->
+        </tr>
+    </thead>
+    <tbody>
+        {% for team in teams %}
+        <tr>
+            <td><a href="{% url 'show_team' team.pk %}">{{ team.name }}</a></td>
+            <td>{{ team.city }} / {{ team.country }}</td>
+            <td>{{ team.manager.first_name }} {{ team.manager.last_name }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
 {% endblock %}

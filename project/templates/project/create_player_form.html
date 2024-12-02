@@ -2,16 +2,26 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<h2>Create a Player Account</h2>
-<br>
-<form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <br>
-    {{ user_creation_form.as_table }}
-    <input type="submit" value="Create Player">
-</form>
+<div class="create-player-container">
 
+    <h2>Create a Player Account</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="create-player-form">
+        {% csrf_token %}
+
+        <!-- Player object creation form -->
+        <div class="form-section">
+            {{ form.as_p }}
+        </div>
+
+        <!-- User creation form -->
+        <div class="form-section">
+            {{ user_creation_form.as_table }}
+        </div>
+
+        <button type="submit" class="create-player-button">Create Player</button>
+    </form>
+</div>
 {% endblock %}
 
 

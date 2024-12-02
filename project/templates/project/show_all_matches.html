@@ -2,20 +2,14 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<h2>All Matches</h2>
-<br>
-<table>
-    <tr>
-        <th>Teams</th>
-        <th>Date</th>
-        <th>Score</th>
-    </tr>
+
+<div class="matches-container">
     {% for match in matches %}
-    <tr>
-        <td>{{match.home_team}} vs {{match.away_team}}</td>
-        <td>{{ match.date }}</td>
-        <td>{{ match.home_score }}-{{match.away_score}}</td>
-    </tr>
+    <div class="match-row">
+        <p><strong>{{ match.home_team }} vs {{ match.away_team }}</strong></p>
+        <p><strong>Date:</strong> {{ match.date }}</p>
+        <p><strong>Score:</strong> {{ match.home_score }} - {{ match.away_score }}</p>
+    </div>
     {% endfor %}
-</table>
+</div>
 {% endblock %}
