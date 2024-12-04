@@ -66,7 +66,7 @@ footer a{
     flex-direction: column; /* Arrange match rows vertically */
     gap: 15px; /* Add space between rows */
     padding: 10px;
-    margin: 20px auto; /* Top-bottom:20px & Center the container horizontally */
+    margin: 50px auto; /* Top-bottom:20px & Center the container horizontally */
     max-width: 80%; 
 }
 
@@ -92,7 +92,7 @@ footer a{
 
 .teams-table {
     width: 80%; /* Set table width to 80% of the page */
-    margin: 25px auto; /* Center the table horizontally */
+    margin: 50px auto; /* Center the table horizontally */
     border-collapse: collapse; /* Remove default table spacing */
     text-align: left; /* Align text to the left */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add subtle shadow for depth */
@@ -213,7 +213,7 @@ footer a{
 /* TEAM PAGE */
 .team-container {
     max-width: 800px; /* Restrict width for readability */
-    margin: 30px auto; /* Center the content on the page */
+    margin: 50px auto; /* Center the content on the page */
     padding: 20px;
     background-color: #ffffff; /* White background for the content */
     border-radius: 15px; /* Rounded edges */
@@ -278,41 +278,118 @@ footer a{
 }
 
 
-/* PLAYER PAGE */
-.player-container {
-    max-width: 600px; /* Restrict width for better readability */
-    margin: 30px auto; /* Center the content */
-    padding: 20px;
-    background-color: #ffffff; /* White background for contrast */
-    border-radius: 15px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+/* PLAYER & MANAGER PAGE */
+.profile-container {
+    max-width: 800px; /* Restrict width for better readability */
+    margin: 50px auto; /* Center the content */
     text-align: center; /* Center align the content */
 }
 
-.player-header h2 {
+/* Profile Section */
+.player-profile{
+    position: relative; /* Make the container a positioned element */
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Container for the invite button */
+.invite-button-container {
+    position: absolute;
+    top: 10px; /* Distance from the top edge */
+    right: 10px; /* Distance from the right edge */
+}
+
+/* Styling the invite button */
+.invite-button {
+    background-color: #d40210; /* Red background */
+    color: #ffffff; /* White text */
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.invite-button:hover {
+    background-color: #bc030f; /* Darker red */
+}
+
+/* Disabled state for the invite button */
+.invite-button.disabled {
+    background-color: #cccccc; /* Gray for disabled */
+    color: #666666;
+    cursor: not-allowed;
+}
+
+.manager-profile {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.team-info{
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 20px;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.team-info h3{
+    color: #d40210;
+}
+
+.profile-container h2 {
     color: #d40210; /* Red color for the header */
     font-size: 28px; /* Larger font for the player's name */
     margin-bottom: 20px; /* Space below the name */
 }
 
-.player-details p {
+.profile-container p {
     font-size: 18px; /* Font size for player details */
     margin: 10px 0; /* Spacing between details */
 }
 
-.player-details strong {
+.profile-container strong {
     color: #d40210; /* Highlight labels in red */
 }
 
-.player-image img {
-    width: 200px; /* Fixed width for profile image */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 50%; /* Circular image */
-    border: 3px solid #d40210; /* Red border for the image */
-    margin: 20px 0; /* Space around the image */
+.profile-container a{
+    text-decoration: none;
+    font-weight: bold;
+    color:#333;
+}
+.profile-container a:hover{
+    text-decoration: underline; /* Underline on hover */
 }
 
-.back-button {
+.player-image img, .manager-image img {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px; /* Square image */
+    object-fit: cover;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button {
     display: inline-block; /* Inline button */
     margin-top: 20px; /* Space above the back button */
     padding: 10px 15px; /* Padding inside the button */
@@ -326,15 +403,55 @@ footer a{
     transition: background-color 0.3s ease; /* Smooth hover effect */
 }
 
-.back-button:hover {
+.logout-button:hover {
     background-color: #bc030f; /* Darker red on hover */
 }
 
 
-/* Create Player Page */
+/* Team Info Section */
+.team-info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    gap: 20px;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.team-info h3 {
+    color: #d40210; /* Red for the section heading */
+}
+
+.team-info ul {
+    list-style: none; /* Remove default bullet points */
+    padding: 0; /* Remove padding */
+    margin: 0; /* Remove margin */
+}
+
+.team-info li {
+    font-size: 18px; /* Font size for player names */
+    margin-bottom: 10px; /* Space between players */
+}
+
+.team-info a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #333; /* Neutral text color */
+}
+
+.team-info a:hover {
+    text-decoration: underline; /* Underline on hover */
+}
+
+
+
+/* CREATE PLAYER PAGE */
 .create-player-container {
     max-width: 600px;
-    margin: 30px auto; 
+    margin: 50px auto; 
     padding: 20px; /* Add padding */
     background-color: #ffffff; /* White background for contrast */
     border-radius: 15px; /* Rounded edges */
@@ -419,7 +536,7 @@ footer a{
 
 .create-manager-container { /* styling for container */
     max-width: 600px;
-    margin: 30px auto; /* Center the form */
+    margin: 50px auto; /* Center the form */
     padding: 20px;
     background-color: #ffffff;
     border-radius: 15px; 
@@ -491,4 +608,86 @@ footer a{
 
 .create-manager-button:hover {
     background-color: #bc030f; /* Darker red on hover */
+}
+
+
+/* INBOX PAGE */
+.inbox-container {
+    max-width: 800px;
+    margin: 50px auto; /* Center the inbox on the page */
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.inbox-container h2 {
+    text-align: center;
+    color: #d40210; /* Red for the heading */
+    margin-bottom: 20px;
+}
+
+.inbox-section {
+    margin-top: 20px;
+}
+
+.inbox-section h3 {
+    color: #d40210; /* Red for subheadings */
+    margin-bottom: 15px;
+}
+
+.inbox-item {
+    background-color: #f9f9f9; /* Light background for items */
+    border: 1px solid #ddd; /* Border around each item */
+    border-radius: 8px; /* Rounded edges */
+    padding: 15px; /* Padding inside items */
+    margin-bottom: 15px; /* Spacing between items */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.inbox-item p {
+    margin: 0; /* Remove default margin from paragraphs */
+    font-size: 16px;
+}
+
+.inbox-item form {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+}
+
+.inbox-item button {
+    padding: 8px 12px; /* Padding for buttons */
+    font-size: 14px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer; /* Pointer cursor for buttons */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Accept Button */
+.inbox-item button[name="response"][value="Accepted"] {
+    background-color: #4CAF50; /* Green for Accept button */
+    color: white;
+}
+
+.inbox-item button[name="response"][value="Accepted"]:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Reject Button */
+.inbox-item button[name="response"][value="Rejected"] {
+    background-color: #f44336;
+    color: white; 
+}
+
+.inbox-item button[name="response"][value="Rejected"]:hover {
+    background-color: #e53935; 
+}
+
+/* Response Status */
+.inbox-item .response-status {
+    font-weight: bold;
+    color: #555; /* Neutral color for status text */
 }

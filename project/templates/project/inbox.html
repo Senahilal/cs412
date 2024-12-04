@@ -1,0 +1,52 @@
+<!-- project/templates/project/inbox.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="inbox-container">
+    <h2>Inbox</h2>
+
+    {% if user.player %}
+    <div class="inbox-section">
+        <h3>Invitations Received</h3>
+        <ul>
+            {% for invitation in invitations %}
+            <li class="inbox-item">
+                <p>
+                    <strong>{{ invitation.inviter.first_name }} {{ invitation.inviter.last_name }}</strong> invited you to join their team: 
+                    <strong>{{ invitation.inviter.get_team.name }}</strong>
+                </p>
+
+                {% if invitation.status == "Pending" %}
+                <form method="POST" action="{% url 'respond_invite' invitation.pk %}">
+                    {% csrf_token %}
+                    <button type="submit" name="response" value="Accepted">Accept</button>
+                    <button type="submit" name="response" value="Rejected">Reject</button>
+                </form>
+                {% else %}
+                <p class="response-status">Response: {{ invitation.status }}</p>
+                {% endif %}
+            </li>
+            {% empty %}
+            <p>No invitations received.</p>
+            {% endfor %}
+        </ul>
+    </div>
+    {% elif user.manager %}
+    <div class="inbox-section">
+        <h3>Invitations Sent</h3>
+        <ul>
+            {% for invitation in invitations %}
+            <li class="inbox-item">
+                <p>
+                    Invitation to <strong>{{ invitation.invitee.first_name }} {{ invitation.invitee.last_name }}</strong>
+                </p>
+                <p class="response-status">Status: {{ invitation.status }}</p>
+            </li>
+            {% empty %}
+            <p>No invitations sent.</p>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

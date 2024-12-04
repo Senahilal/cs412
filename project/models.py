@@ -29,6 +29,49 @@ class Player(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+    def get_absolute_url(self):
+        '''Return a URL to show this one profile'''
+        return reverse('show_player', kwargs={'pk': self.pk})
+    
+    def get_current_team(self):
+        ''' Returns the current team of the player, if any.'''
+        current_team_record = PlaysIn.objects.filter(player=self, end_date__isnull=True).first()
+        return current_team_record.team if current_team_record else None
+
+    def get_old_teams(self):
+        '''Returns a queryset of teams the player was previously part of.'''
+        return Team.objects.filter(playsin__player=self, playsin__end_date__isnull=False)
+    
+    def respond_to_invitation(self, invitation, response):
+        """
+        Responds to the given invitation with 'Accepted' or 'Rejected'.
+        """
+        if invitation.invitee != self:
+            raise ValueError("This invitation does not belong to the current player.")
+
+        if response not in ['Accepted', 'Rejected']:
+            raise ValueError("Invalid response. Must be 'Accepted' or 'Rejected'.")
+
+        # Update the invitation status
+        invitation.status = response
+        invitation.save()
+
+        if response == 'Accepted':
+            # Update the end date for the player's current team
+            current_team_record = PlaysIn.objects.filter(player=self, end_date__isnull=True).first()
+            if current_team_record:
+                current_team_record.end_date = datetime.now()
+                current_team_record.save()
+
+            # Add the player to the manager's team
+            PlaysIn.objects.create(
+                player=self,
+                team=invitation.inviter.get_team(),
+                start_date=datetime.now()
+            )
+
+        return f"Invitation {response.lower()} successfully."
 
 #Manager / head coach of the team
 class Manager(models.Model):
@@ -44,6 +87,40 @@ class Manager(models.Model):
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+    
+    def get_team(self):
+        """Returns the team managed by this manager."""
+        return Team.objects.filter(manager=self).first()
+    
+    def get_players_in_team(self):
+        """Returns all players in the team managed by this manager."""
+        team = self.get_team()
+        if team:
+            return team.get_current_players()
+        return []
+    
+    def get_pending_invitees(self):
+        """
+        Returns a queryset of players who have pending invitations from this manager.
+        """
+        return Player.objects.filter(receiver__inviter=self, receiver__status="Pending")
+    
+    def send_invitation(self, player):
+        """
+        Sends an invitation to the specified player if conditions are met.
+        """
+        # Check if the player is already in the manager's team
+        if player in self.get_players_in_team():
+            raise ValueError("Player is already in your team.")
+
+        # Check for an existing pending invitation
+        existing_invitation = Invitation.objects.filter(inviter=self, invitee=player, status='Pending').first()
+        if existing_invitation:
+            raise ValueError("An invitation is already pending for this player.")
+
+        # Create the invitation
+        Invitation.objects.create(inviter=self, invitee=player)
+        return "Invitation sent successfully."
 
 class Team(models.Model):
     name = models.CharField(max_length=100)
@@ -53,6 +130,19 @@ class Team(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_current_players(self):
+        """
+        Returns all players currently in this team.
+        """
+        return Player.objects.filter(playsin__team=self, playsin__end_date__isnull=True)
+
+    def get_old_players(self):
+        """
+        Returns all players who were previously part of this team.
+        """
+        return Player.objects.filter(playsin__team=self, playsin__end_date__isnull=False)
+
 
 class Match(models.Model):
     date = models.DateField()
@@ -78,3 +168,19 @@ class PlaysIn(models.Model):
             return f"{self.player} played in {self.team} from {self.start_date} to {self.end_date}"
         else:
             return f"{self.player} plays in {self.team}" #player is currently playing in this team
+
+
+class Invitation(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
+        ('Rejected', 'Rejected'),
+    ]
+
+    inviter = models.ForeignKey('Manager', on_delete=models.CASCADE, related_name='sender')
+    invitee = models.ForeignKey('Player', on_delete=models.CASCADE, related_name='receiver')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
+    timestamp = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        return f"Invitation from {self.inviter} to {self.invitee} - {self.status}"

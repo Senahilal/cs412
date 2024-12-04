@@ -8,9 +8,11 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.shortcuts import redirect, get_object_or_404
 
 from django.contrib.auth.mixins import LoginRequiredMixin 
-from django.contrib.auth.forms import UserCreationForm ## NEW
-from django.contrib.auth.models import User ## NEW
-from django.contrib.auth import login ## NEW
+from django.contrib.auth.forms import UserCreationForm 
+from django.contrib.auth.models import User 
+from django.contrib.auth import login
+from django.contrib import messages
+
 
 # Create your views here.
 class ShowAllMatchesView(ListView):
@@ -34,22 +36,26 @@ class ShowTeamPageView(DetailView):
     template_name = 'project/show_team_page.html'
     context_object_name = 'team'
 
-    def get_context_data(self, **kwargs):
-        '''Add players to the context for display in the template.'''
-        context = super().get_context_data(**kwargs)
-        team = self.get_object()
-
-        # Fetch players associated with this team using the PlaysIn model
-        plays_in = PlaysIn.objects.filter(team=team).select_related('player')
-        context['players'] = [play_in.player for play_in in plays_in]
-        return context
-
 class ShowPlayerPageView(DetailView):
     '''A view to show a single player's profile.'''
 
     model = Player
     template_name = 'project/show_player.html'
     context_object_name = 'player'
+
+    def get_context_data(self, **kwargs):
+        '''Add additional context if needed.'''
+        context = super().get_context_data(**kwargs)
+        # Add any additional data to context
+
+        return context
+
+class ShowManagerPageView(DetailView):
+    '''A view to show a single manager's profile.'''
+
+    model = Manager
+    template_name = 'project/show_manager.html'
+    context_object_name = 'manager'
 
     def get_context_data(self, **kwargs):
         '''Add additional context if needed.'''
@@ -138,3 +144,123 @@ class CreateManagerView(CreateView):
         if team:
             return reverse('show_team', kwargs={'pk': team.pk})
         return reverse('show_all_teams')  # Defaultm page to go to if no team is found
+
+
+# To show invitation and responses to player and manager profiles
+class InboxView(LoginRequiredMixin, ListView):
+    template_name = 'project/inbox.html'
+    context_object_name = 'invitations'
+
+    def get_queryset(self):
+        user = self.request.user
+        if hasattr(user, 'player'):  # Player's inbox
+            return Invitation.objects.filter(invitee=user.player).order_by('-timestamp')
+        elif hasattr(user, 'manager'):  # Manager's sent invitations
+            return Invitation.objects.filter(inviter=user.manager).order_by('-timestamp')
+        return Invitation.objects.none()
+    
+    def get_login_url(self):
+        return reverse('login')
+
+
+# def send_invite(request, player_id):
+#     """
+#     Sends an invitation from the logged-in manager to the selected player.
+#     """
+#     # Get the player object by its ID
+#     player = get_object_or_404(Player, id=player_id)
+    
+#     # Get the logged-in manager
+#     manager = request.user.manager
+
+#     # Check if the player is already in the manager's team
+#     if player in manager.get_players_in_team():
+#         messages.error(request, "Player is already in your team.")
+#     else:
+#         # Create a new invitation in the database
+#         Invitation.objects.create(inviter=manager, invitee=player)
+#         messages.success(request, f"Invitation sent to {player.first_name} {player.last_name}.")
+    
+#     # Redirect back to the player's profile page
+#     return redirect('show_player', pk=player.pk)
+
+
+
+# def respond_invite(request, invite_id):
+#     """
+#     Allows a player to accept or reject an invitation.
+#     """
+#     # Get the invitation by its ID, ensuring it belongs to the logged-in player
+#     invitation = get_object_or_404(Invitation, id=invite_id, invitee=request.user.player)
+
+#     if request.method == 'POST':
+#         # Get the player's response (Accepted or Rejected)
+#         response = request.POST.get('response')
+#         if response in ['Accepted', 'Rejected']:
+#             # Update the invitation status
+#             invitation.status = response
+#             invitation.save()
+
+#             if response == 'Accepted':
+#                 # Get the player's current team, if any
+#                 current_team_record = PlaysIn.objects.filter(player=invitation.invitee, end_date__isnull=True).first()
+
+#                 # End the current team's record if it exists
+#                 if current_team_record:
+#                     current_team_record.end_date = datetime.now()
+#                     current_team_record.save()
+
+#                 # Add the player to the new team
+#                 PlaysIn.objects.create(
+#                     player=invitation.invitee,
+#                     team=invitation.inviter.get_team(),
+#                     start_date=datetime.now()
+#                 )
+
+#             messages.success(request, f"You have {response.lower()} the invitation.")
+#         else:
+#             messages.error(request, "Invalid response.")
+    
+#     # Redirect back to the player's inbox
+#     return redirect('inbox')
+
+
+class SendInvitationView(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        # Ensure the user is a manager
+        if not hasattr(request.user, 'manager'):
+            messages.error(request, "Only managers can send invitations.")
+            return redirect('show_player', pk=self.kwargs['player_pk'])
+
+        manager = request.user.manager
+        player = get_object_or_404(Player, pk=self.kwargs['player_pk'])
+
+        try:
+            # Use the method in manager model to send the invitation
+            message = manager.send_invitation(player)
+            messages.success(request, message)
+        except ValueError as e:
+            messages.error(request, str(e))
+
+        return redirect('show_player', pk=player.pk)
+
+class RespondInvitationView(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        # Ensure the user is a player
+        if not hasattr(request.user, 'player'):
+            messages.error(request, "Only players can respond to invitations.")
+            return redirect('inbox')
+
+        player = request.user.player
+        invitation = get_object_or_404(Invitation, pk=self.kwargs['invite_pk'], invitee=player)
+
+        if request.method == 'POST':
+            response = request.POST.get('response')
+            try:
+                # Use the method in player model to respond to the invitation
+                message = player.respond_to_invitation(invitation, response)
+                messages.success(request, message)
+            except ValueError as e:
+                messages.error(request, str(e))
+
+        return redirect('inbox')

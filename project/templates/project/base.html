@@ -17,19 +17,15 @@ This is base page from which all other pages will inherit.
                     <li><a href="{% url 'show_all_teams' %}">Teams</a></li>
                     {% if user.is_authenticated %}
                         <!-- Logged in user: {{request.user}} -->
+                        <li><a href="{% url 'inbox' %}">Inbox</a></li>
                         
-                        {% if request.user.profile %}
-                            <li><a href="">My Profile</a></li>
+                        {% if request.user.player %}
+                            <li><a href="{% url 'show_player' request.user.player.pk %}">My Profile</a></li>
+                        {% elif request.user.manager %}
+                            <li><a href="{% url 'show_manager' request.user.manager.pk %}">My Profile</a></li>
                         {% endif %}
-                        <li>
-                            <form method="POST" action="{% url 'project_logout' %}">
-                                {% csrf_token %}
-                                <button type="submit" id="logout-button">Logout</button>
-                            </form>
-                        </li>
-                        
                     {% else %}
-                        <li><a href="{% url 'project_login' %}" id="logout-button">Login/Register</a></li>
+                        <li><a href="{% url 'project_login' %}" id="login-button">Login/Register</a></li>
                     {% endif %}
                 </ul>
             </nav>

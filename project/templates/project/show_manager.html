@@ -1,0 +1,60 @@
+<!-- project/templates/project/show_manager.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="profile-container">
+    <!-- Manager Profile Section -->
+    <div class="manager-profile">
+        <!-- Profile Image -->
+        <div class="manager-image">
+            {% if manager.profile_image_file %}
+                <img src="{{ manager.profile_image_file.url }}" alt="profile_picture">
+            {% else %}
+                <div class="placeholder-image">No Image</div>
+            {% endif %}
+        </div>
+        
+        <!-- Manager Information -->
+        <div class="manager-info">
+            <h2>{{ manager.first_name }} {{ manager.last_name }}</h2>
+            <p><strong>Email:</strong> {{ manager.email }}</p>
+        </div>
+    </div>
+
+    <!-- Team Info Section -->
+    <div class="team-info">
+        <h3>Team Information</h3>
+        {% if manager.get_team %}
+            <p><strong>Team Managed:</strong> 
+                <a href="{% url 'show_team' manager.get_team.pk %}">
+                    {{ manager.get_team.name }}
+                </a>
+            </p>
+            <h4>Players in the Team:</h4>
+            <ul>
+                {% for player in manager.get_players_in_team %}
+                <li>
+                    <a href="{% url 'show_player' player.pk %}">
+                        {{ player.first_name }} {{ player.last_name }}
+                    </a> - {{ player.position }}
+                </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>This manager currently does not manage a team.</p>
+        {% endif %}
+    </div>
+
+    <!-- If its logged in user's page provide a logout button -->
+    <div>
+        {% if user.is_authenticated %}
+            {% if request.user.manager.pk == manager.pk %}
+                <form method="POST" action="{% url 'project_logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

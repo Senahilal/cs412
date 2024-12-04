@@ -2,24 +2,72 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
-<div class="player-container">
-    <div class="player-header">
-        <h2>{{ player.first_name }} {{ player.last_name }}</h2>
-    </div>
-    
-    <div class="player-details">
-        <p><strong>Position:</strong> {{ player.position }}</p>
-        <p><strong>Number:</strong> {{ player.number }}</p>
+<div class="profile-container">
+
+    <!-- Profile Section -->
+    <div class="player-profile">
+
+        <!-- Invitation Button -->
+        <div class="invite-button-container">
+            <!-- If authenticated user is manager and this player is not user's team, 
+            user can send invite to the player -->
+            {% if user.is_authenticated and user.manager %}
+                <!-- Check if the player is not in the manager's team -->
+                {% if player not in user.manager.get_players_in_team %}
+                    <!-- Check if the player already has a pending invitation -->
+                    {% if player in user.manager.get_pending_invitees %}
+                        <button type="button" class="invite-button disabled" disabled>Sent</button>
+                    {% else %}
+                        <form method="POST" action="{% url 'send_invite' player.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" class="invite-button">Send Invite</button>
+                        </form>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        </div>
+
+        <!-- Profile Image -->
+        <div class="player-image">
+            {% if player.profile_image_file %}
+                <img src="{{ player.profile_image_file.url }}" alt="profile_picture">
+            {% else %}
+                <div class="placeholder-image">No Image</div>
+            {% endif %}
+        </div>
+
+        <!-- Profile Information -->
+        <div class="player-info">
+            <h2>{{ player.first_name }} {{ player.last_name }}</h2>
+            <p><strong>Position:</strong> {{ player.position }}</p>
+            <p><strong>Number:</strong> {{ player.number }}</p>
+        </div>
     </div>
 
-    <div class="player-image">
-        {% if player.profile_image_file %}
-            <img src="{{ player.profile_image_file.url }}" alt="Profile Picture">
+    <!-- Team Info Section -->
+    <div class="team-info">
+        <h3>Team Information</h3>
+        {% if player.get_current_team %}
+            <p><strong>Current Team:</strong> 
+                <a href="{% url 'show_team' player.get_current_team.pk %}">
+                    {{ player.get_current_team.name }}
+                </a>
+            </p>
         {% else %}
-            <p>No profile picture available.</p>
+            <p>This player currently is not playing in a team.</p>
         {% endif %}
     </div>
 
-    <a href="{% url 'show_team' player.playsin_set.first.team.pk %}" class="back-button">Back to Team</a>
+    <!-- If its logged in user's page provide a logout button -->
+    <div>
+        {% if user.is_authenticated %}
+            {% if request.user.player.pk == player.pk %}
+                <form method="POST" action="{% url 'project_logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout-button">Logout</button>
+                </form>
+            {% endif %}
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

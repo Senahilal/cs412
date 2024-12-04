@@ -13,7 +13,7 @@
     <div class="team-players">
         <h3>Players</h3>
         <ul>
-            {% for player in players %}
+            {% for player in team.get_current_players %}
             <li>
                 <a href="{% url 'show_player' player.pk %}">
                     {{ player.first_name }} {{ player.last_name }}
