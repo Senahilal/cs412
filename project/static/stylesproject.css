@@ -550,6 +550,13 @@ footer a{
     margin-bottom: 20px;
 }
 
+.create-manager-container h3 {
+    color: #d40210; /* Red for the heading */
+    font-size: 20px; /*larger font for the title */
+    margin-bottom: 15px;
+    text-align: left;
+}
+
 .create-manager-form {
     display: flex;
     flex-direction: column; /* Stack form elements vertically */

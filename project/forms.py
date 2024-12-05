@@ -33,3 +33,14 @@ class CreateManagerForm(forms.ModelForm):
         '''Associate this form with the Manager model.'''
         model = Manager
         fields = ['first_name', 'last_name', 'email']
+
+
+class CreateTeamForm(forms.ModelForm):
+    name = forms.CharField(label="Team Name", required=True)
+    city = forms.CharField(label="City", required=True)
+    country = forms.CharField(label="Country", required=True)
+
+    class Meta:
+        '''Associate this form with the Team model.'''
+        model = Team
+        fields = ['name', 'city', 'country']

@@ -114,6 +114,7 @@ class CreateManagerView(CreateView):
         context = super().get_context_data(**kwargs)
         # Pass an unbound UserCreationForm instance to the template
         context['user_creation_form'] = UserCreationForm()
+        context['create_team_form'] = CreateTeamForm()
         return context
 
     def form_valid(self, form):
@@ -131,6 +132,15 @@ class CreateManagerView(CreateView):
 
             # Save the Manager instance
             self.object = form.save()
+
+
+            # Saving team instance with the manager
+
+            team_form = CreateTeamForm(self.request.POST)
+            if team_form.is_valid():
+                team = team_form.save(commit=False)
+                team.manager = self.object
+                team.save()
 
             # Delegate the rest to the superclass
             return super().form_valid(form)
@@ -150,6 +160,7 @@ class CreateManagerView(CreateView):
 class InboxView(LoginRequiredMixin, ListView):
     template_name = 'project/inbox.html'
     context_object_name = 'invitations'
+    login_url = '/project_login'  # Specify the login URL
 
     def get_queryset(self):
         user = self.request.user
@@ -159,73 +170,17 @@ class InboxView(LoginRequiredMixin, ListView):
             return Invitation.objects.filter(inviter=user.manager).order_by('-timestamp')
         return Invitation.objects.none()
     
+    # Redirect users to project_login if not authenticated
     def get_login_url(self):
-        return reverse('login')
-
-
-# def send_invite(request, player_id):
-#     """
-#     Sends an invitation from the logged-in manager to the selected player.
-#     """
-#     # Get the player object by its ID
-#     player = get_object_or_404(Player, id=player_id)
-    
-#     # Get the logged-in manager
-#     manager = request.user.manager
-
-#     # Check if the player is already in the manager's team
-#     if player in manager.get_players_in_team():
-#         messages.error(request, "Player is already in your team.")
-#     else:
-#         # Create a new invitation in the database
-#         Invitation.objects.create(inviter=manager, invitee=player)
-#         messages.success(request, f"Invitation sent to {player.first_name} {player.last_name}.")
-    
-#     # Redirect back to the player's profile page
-#     return redirect('show_player', pk=player.pk)
-
-
-
-# def respond_invite(request, invite_id):
-#     """
-#     Allows a player to accept or reject an invitation.
-#     """
-#     # Get the invitation by its ID, ensuring it belongs to the logged-in player
-#     invitation = get_object_or_404(Invitation, id=invite_id, invitee=request.user.player)
-
-#     if request.method == 'POST':
-#         # Get the player's response (Accepted or Rejected)
-#         response = request.POST.get('response')
-#         if response in ['Accepted', 'Rejected']:
-#             # Update the invitation status
-#             invitation.status = response
-#             invitation.save()
-
-#             if response == 'Accepted':
-#                 # Get the player's current team, if any
-#                 current_team_record = PlaysIn.objects.filter(player=invitation.invitee, end_date__isnull=True).first()
-
-#                 # End the current team's record if it exists
-#                 if current_team_record:
-#                     current_team_record.end_date = datetime.now()
-#                     current_team_record.save()
-
-#                 # Add the player to the new team
-#                 PlaysIn.objects.create(
-#                     player=invitation.invitee,
-#                     team=invitation.inviter.get_team(),
-#                     start_date=datetime.now()
-#                 )
-
-#             messages.success(request, f"You have {response.lower()} the invitation.")
-#         else:
-#             messages.error(request, "Invalid response.")
-    
-#     # Redirect back to the player's inbox
-#     return redirect('inbox')
+        return reverse('project_login')
 
 
 class SendInvitationView(LoginRequiredMixin, View):
+    
+    # Redirect users to project_login if not authenticated
+    def get_login_url(self):
+        return reverse('project_login')
+    
     def dispatch(self, request, *args, **kwargs):
         # Ensure the user is a manager
         if not hasattr(request.user, 'manager'):
@@ -245,6 +200,11 @@ class SendInvitationView(LoginRequiredMixin, View):
         return redirect('show_player', pk=player.pk)
 
 class RespondInvitationView(LoginRequiredMixin, View):
+    
+    # Redirect users to project_login if not authenticated
+    def get_login_url(self):
+        return reverse('project_login')
+
     def dispatch(self, request, *args, **kwargs):
         # Ensure the user is a player
         if not hasattr(request.user, 'player'):
