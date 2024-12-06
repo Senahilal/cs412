@@ -212,18 +212,44 @@ footer a{
 
 /* TEAM PAGE */
 .team-container {
-    max-width: 800px; /* Restrict width for readability */
+    max-width: 60%; /* Restrict width for readability */
     margin: 50px auto; /* Center the content on the page */
     padding: 20px;
-    background-color: #ffffff; /* White background for the content */
-    border-radius: 15px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    background-color: #ffffff;
+    border-radius: 15px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Container for the invite button */
+.request-button-container {
+    position: absolute;
+    top: 20px; /* Distance from the top edge */
+    right: 10px; /* Distance from the right edge */
+}
+
+/* Styling the invite button */
+.request-button {
+    background-color: #d40210; /* Red background */
+    color: #ffffff; /* White text */
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.request-button:hover {
+    background-color: #bc030f; /* Darker red */
 }
 
 .team-header {
     text-align: center; /* Center the team name and details */
-    color: #d40210; /* Red for the team header */
-    margin-bottom: 20px; /* Add space below the header */
+    color: #d40210;
+    margin: 20px; /* Add space below&above the header */
 }
 
 .team-header a{
@@ -290,7 +316,7 @@ footer a{
 
 /* PLAYER & MANAGER PAGE */
 .profile-container {
-    max-width: 800px; /* Restrict width for better readability */
+    max-width: 60%; /* Restrict width for better readability */
     margin: 50px auto; /* Center the content */
     text-align: center; /* Center align the content */
 }
