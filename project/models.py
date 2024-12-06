@@ -28,6 +28,7 @@ class Player(models.Model):
 
 
     def __str__(self):
+        '''Return a string representation of this Player.'''
         return f"{self.first_name} {self.last_name}"
     
     def get_absolute_url(self):
@@ -86,7 +87,12 @@ class Manager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)  # Link to Django User
 
     def __str__(self):
+        '''Return a string representation of this Manager.'''
         return f"{self.first_name} {self.last_name}"
+    
+    def get_absolute_url(self):
+        '''Return a URL to show this one profile'''
+        return reverse('show_manager', kwargs={'pk': self.pk})
     
     def get_team(self):
         """Returns the team managed by this manager."""
@@ -122,6 +128,30 @@ class Manager(models.Model):
         Invitation.objects.create(inviter=self, invitee=player)
         return "Invitation sent successfully."
 
+    def respond_to_match_request(self, match_request, response):
+        """
+        Responds to the given match request with 'Accepted' or 'Rejected'.
+        """
+
+        #
+        if match_request.receiver != self:
+            raise ValueError("This match request does not belong to the current manager.")
+
+        # Update the match request status
+        match_request.status = response
+        match_request.save()
+
+        if response == 'Accepted':
+            # Create and add the match to the database
+            Match.objects.create(
+                home_team=match_request.sender.get_team(),
+                away_team=self.get_team(),
+                date=match_request.date
+            )
+
+        return f"Match request {response.lower()} successfully."
+
+
 class Team(models.Model):
     name = models.CharField(max_length=100)
     city = models.CharField(max_length=100)
@@ -129,6 +159,7 @@ class Team(models.Model):
     manager = models.ForeignKey(Manager, on_delete=models.CASCADE)
 
     def __str__(self):
+        '''Return a string representation of this Team.'''
         return self.name
     
     def get_current_players(self):
@@ -142,14 +173,31 @@ class Team(models.Model):
         Returns all players who were previously part of this team.
         """
         return Player.objects.filter(playsin__team=self, playsin__end_date__isnull=False)
-
+    
+    def get_matches(self):
+        """
+        Returns all matches for this team, ordered by date.
+        """
+        return Match.objects.filter(models.Q(home_team=self) | models.Q(away_team=self)).order_by('date')
+    
+    def get_played_matches(self):
+        """
+        Returns all played matches for this team (before the current time and date)
+        """
+        return self.get_matches().filter(date__lte=datetime.now().date()).order_by('-date')
+    
+    def get_future_matches(self):
+        """
+        Returns all future matches for this team.
+        """
+        return self.get_matches().filter(date__gte=datetime.now().date()).order_by('date')
 
 class Match(models.Model):
     date = models.DateField()
     home_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='home_team')
     away_team = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='away_team')
-    home_score = models.IntegerField()
-    away_score = models.IntegerField()
+    home_score = models.IntegerField(blank=True, null=True)
+    away_score = models.IntegerField(blank=True, null=True)
     
     def __str__(self):
         return f"{self.home_team} vs {self.away_team} on {self.date}"
@@ -163,6 +211,7 @@ class PlaysIn(models.Model):
     end_date = models.DateField(null=True, blank=True) #null when player is currently in the team
 
     def __str__(self):
+        '''Return a string representation of this model.'''
         #If player is not playing in this team anymore
         if self.end_date:
             return f"{self.player} played in {self.team} from {self.start_date} to {self.end_date}"
@@ -183,4 +232,22 @@ class Invitation(models.Model):
     timestamp = models.DateTimeField(default=datetime.now)
 
     def __str__(self):
+        '''Return a string representation of this Invitation.'''
         return f"Invitation from {self.inviter} to {self.invitee} - {self.status}"
+
+class MatchRequest(models.Model):
+    STATUS_CHOICES = [
+        ('Pending', 'Pending'),
+        ('Accepted', 'Accepted'),
+        ('Rejected', 'Rejected'),
+    ]
+
+    sender = models.ForeignKey('Manager', on_delete=models.CASCADE, related_name='match_sender')
+    receiver = models.ForeignKey('Manager', on_delete=models.CASCADE, related_name='match_receiver')
+    date = models.DateField()
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
+    timestamp = models.DateTimeField(default=datetime.now)
+
+    def __str__(self):
+        '''Return a string representation of this MatchRequest.'''
+        return f"Match request from {self.sender} to {self.receiver} - {self.timestamp}"

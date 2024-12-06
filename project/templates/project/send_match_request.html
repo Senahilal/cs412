@@ -1,0 +1,20 @@
+<!-- project/templates/project/send_match_request.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Request a Match</h2>
+    <p>Choose a date to request a match against {{ team.name }}.</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="submit-button">Send Match Request</button>
+    </form>
+    <br>
+    <a href="{% url 'show_team' team.pk %}" class="back-button">Back to Team</a>
+</div>
+{% endblock %}
+
+
+
+

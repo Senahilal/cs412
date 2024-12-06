@@ -36,6 +36,14 @@ class ShowTeamPageView(DetailView):
     template_name = 'project/show_team_page.html'
     context_object_name = 'team'
 
+    def get_context_data(self, **kwargs):
+        '''Add additional context if needed.'''
+        context = super().get_context_data(**kwargs)
+        # Add any additional data to context
+        team = self.get_object()
+
+        return context
+
 class ShowPlayerPageView(DetailView):
     '''A view to show a single player's profile.'''
 
@@ -160,7 +168,16 @@ class CreateManagerView(CreateView):
 class InboxView(LoginRequiredMixin, ListView):
     template_name = 'project/inbox.html'
     context_object_name = 'invitations'
-    login_url = '/project_login'  # Specify the login URL
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+
+        if hasattr(user, 'manager'):
+            context['received_requests'] = MatchRequest.objects.filter(receiver=user.manager).order_by('-timestamp')
+            context['sent_requests'] = MatchRequest.objects.filter(sender=user.manager).order_by('-timestamp')
+        
+        return context
 
     def get_queryset(self):
         user = self.request.user
@@ -219,6 +236,76 @@ class RespondInvitationView(LoginRequiredMixin, View):
             try:
                 # Use the method in player model to respond to the invitation
                 message = player.respond_to_invitation(invitation, response)
+                messages.success(request, message)
+            except ValueError as e:
+                messages.error(request, str(e))
+
+        return redirect('inbox')
+
+class SendMatchRequestView(LoginRequiredMixin, CreateView):
+    model = MatchRequest
+    form_class = CreateMatchRequestForm
+    template_name = 'project/send_match_request.html'
+
+    def get_success_url(self):
+        """Redirect back to the team's page after a successful match request."""
+        return reverse('show_team', kwargs={'pk': self.kwargs['team_pk']})
+
+    def form_valid(self, form):
+        """Attach the sender and receiver managers to the match request."""
+        # Ensure the user is a manager
+        if not hasattr(self.request.user, 'manager'):
+            messages.error(self.request, "Only managers can send match requests.")
+            return redirect('show_team', pk=self.kwargs['team_pk'])
+
+        sender_manager = self.request.user.manager  # Sender is the current user's manager
+        receiver_team = get_object_or_404(Team, pk=self.kwargs['team_pk'])  # Team to which the request is being sent
+        receiver_manager = receiver_team.manager  # Receiver is the team's manager
+
+        # Validate the match date
+        date = form.cleaned_data['date']
+        if date <= datetime.now().date():
+            form.add_error('date', "The match date must be in the future.")
+            return self.form_invalid(form)
+
+        # Check for existing requests for the same date
+        existing_request = MatchRequest.objects.filter(
+            sender=sender_manager,
+            receiver=receiver_manager,
+            date=date,
+        ).first()
+
+        if existing_request:
+            messages.error(self.request, "A match request is already pending.")
+            return redirect('show_team', pk=self.kwargs['team_pk'])
+
+        # Attach sender, receiver, and date to the match request
+        form.instance.sender = sender_manager
+        form.instance.receiver = receiver_manager
+
+        messages.success(self.request, "Match request sent successfully.")
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        """Add the team to the context."""
+        context = super().get_context_data(**kwargs)
+        context['team'] = get_object_or_404(Team, pk=self.kwargs['team_pk'])
+        return context
+
+class RespondMatchRequestView(LoginRequiredMixin, View):
+    def dispatch(self, request, *args, **kwargs):
+        # Ensure the user is a manager
+        if not hasattr(request.user, 'manager'):
+            messages.error(request, "Only managers can respond to match requests.")
+            return redirect('inbox')
+
+        match_request = get_object_or_404(MatchRequest, pk=self.kwargs['match_request_pk'])
+
+        if request.method == 'POST':
+            response = request.POST.get('response')  # 'Accepted' or 'Rejected'
+            try:
+                # Use the method in the manager model to respond to the match request
+                message = request.user.manager.respond_to_match_request(match_request, response)
                 messages.success(request, message)
             except ValueError as e:
                 messages.error(request, str(e))

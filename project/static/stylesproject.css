@@ -226,12 +226,22 @@ footer a{
     margin-bottom: 20px; /* Add space below the header */
 }
 
+.team-header a{
+    text-decoration: none;
+    color:#333;
+}
+
+.team-header strong{
+    color: #d40210;
+}
+
 .team-header h2 {
     font-size: 28px; /* Larger font for the team name */
     margin-bottom: 10px;
 }
 
 .team-header p {
+    color:#333;
     font-size: 16px; /* Adjust font size for team details */
     margin: 5px 0;
 }
@@ -408,7 +418,7 @@ footer a{
 }
 
 
-/* Team Info Section */
+/*Manager's Team Info Section */
 .team-info {
     display: flex;
     flex-direction: column;
@@ -452,16 +462,16 @@ footer a{
 .create-player-container {
     max-width: 600px;
     margin: 50px auto; 
-    padding: 20px; /* Add padding */
-    background-color: #ffffff; /* White background for contrast */
+    padding: 20px;
+    background-color: #ffffff; 
     border-radius: 15px; /* Rounded edges */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    text-align: center; /* Center-align content */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center; 
 }
 
 .create-player-container h2 {
-    color: #d40210; /* Red for the heading */
-    font-size: 24px; /* Slightly larger font for the title */
+    color: #d40210; 
+    font-size: 24px; 
     margin-bottom: 20px; /* Space below the title */
 }
 

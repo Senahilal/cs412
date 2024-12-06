@@ -8,7 +8,11 @@
     <div class="match-row">
         <p><strong>{{ match.home_team }} vs {{ match.away_team }}</strong></p>
         <p><strong>Date:</strong> {{ match.date }}</p>
-        <p><strong>Score:</strong> {{ match.home_score }} - {{ match.away_score }}</p>
+        {% if match.home_score is not None and match.away_score is not None %}
+            <p><strong>Score:</strong>{{ match.home_score }} - {{ match.away_score }}</p>
+        {% else %}
+            <p>Match scheduled</p>
+        {% endif %}
     </div>
     {% endfor %}
 </div>

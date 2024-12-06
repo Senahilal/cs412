@@ -20,7 +20,7 @@ class CreatePlayerForm(forms.ModelForm):
 
 
     class Meta:
-        '''associate this form witht he Profile model'''
+        '''associate this form with the Profile model'''
         model = Player
         fields = ['first_name', 'last_name', 'position', 'number', 'profile_image_file']
 
@@ -44,3 +44,15 @@ class CreateTeamForm(forms.ModelForm):
         '''Associate this form with the Team model.'''
         model = Team
         fields = ['name', 'city', 'country']
+
+class CreateMatchRequestForm(forms.ModelForm):
+    date = forms.DateField(
+        label="Match Date",
+        widget=forms.DateInput(attrs={'type': 'date'}),
+        required=True,
+        help_text="Choose a future date for the match."
+    )
+
+    class Meta:
+        model = MatchRequest
+        fields = ['date']

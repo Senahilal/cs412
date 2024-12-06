@@ -31,6 +31,7 @@
             {% endfor %}
         </ul>
     </div>
+
     {% elif user.manager %}
     <div class="inbox-section">
         <h3>Invitations Sent</h3>
@@ -47,6 +48,54 @@
             {% endfor %}
         </ul>
     </div>
+
+    <div class="inbox-section">
+        <h3>Match Requests Sent</h3>
+        <ul>
+            {% for match_request in sent_requests %}
+                <li class="inbox-item">
+                    <p>
+                        Match Request to <strong>{{ match_request.receiver.get_team.name }}</strong> on <strong>{{ match_request.date }}</strong>. <br>
+                        <small>Sent on: {{ match_request.timestamp }} </small>
+                    </p>
+                    
+                    
+                    <p class="response-status">Status: {{ match_request.status }}</p>
+                </li>
+            {% empty %}
+                <p>No match requests sent.</p>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="inbox-section">
+        <h3>Match Requests Received</h3>
+        <ul>
+            {% for match_request in received_requests %}
+                <li class="inbox-item">
+                    <p>
+                        {{ match_request.sender.first_name }} {{ match_request.sender.last_name }} - <strong>{{ match_request.sender.get_team.name }}</strong>
+                        requested a match on <strong>{{ match_request.date }}</strong>. <br>
+                        <small>Sent on: {{ match_request.timestamp }} </small>
+                    </p>
+                    
+                    
+                    {% if match_request.status == "Pending" %}
+                        <form method="POST" action="{% url 'respond_match_request' match_request.pk %}">
+                            {% csrf_token %}
+                            <button type="submit" name="response" value="Accepted">Accept</button>
+                            <button type="submit" name="response" value="Rejected">Reject</button>
+                        </form>
+                    {% else %}
+                        <p class="response-status"><strong>Response:</strong> {{ match_request.status }}</p>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <p>No match requests received.</p>
+            {% endfor %}
+        </ul>
+    </div>
+        
     {% endif %}
 </div>
 {% endblock %}
