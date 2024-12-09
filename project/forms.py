@@ -88,3 +88,21 @@ class UpdateManagerForm(forms.ModelForm):
     class Meta:
         model = Manager
         fields = ['first_name', 'last_name', 'email', 'profile_image_file']
+
+
+class PlayerSearchForm(forms.Form):
+    team_status = forms.ChoiceField(
+        choices=[('any', 'Any'), ('has_team', 'Has Team'), ('no_team', 'No Team')],
+        required=False,
+        label="Team Status"
+    )
+
+    # Adding position choices based on Player model's POSITION_CHOICES
+    # POSITION_CHOICES defined in the model
+    position_choices = Player.POSITTION_CHOICES  
+    
+    position = forms.ChoiceField(
+        choices=[('', 'All positions')] + list(position_choices),  # Add an 'All positions' option
+        required=False,
+        label='Position'
+    )

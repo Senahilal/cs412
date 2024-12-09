@@ -380,3 +380,38 @@ class RespondMatchRequestView(LoginRequiredMixin, View):
 
         return redirect('inbox')
 
+# Showing all players in a page by using ListView
+class PlayerListView(ListView):
+    model = Player
+    template_name = 'project/show_all_players.html'
+    context_object_name = 'players'
+    paginate_by = 10  # palyer per page
+
+    def get_queryset(self):
+        ''' Return the filtered list of players based on the form input. '''
+        # Get all players initially
+        queryset = super().get_queryset()  
+        form = PlayerSearchForm(self.request.GET)  # Instantiate form with GET data
+
+        # Filter based on team status and position
+        if form.is_valid():
+            team_status = form.cleaned_data.get('team_status')
+            position = form.cleaned_data.get('position')
+            
+            # Filtering players based on team status
+            if team_status == 'has_team':
+                queryset = queryset.filter(hasTeam=True)  # Players with teams
+            elif team_status == 'no_team':
+                queryset = queryset.filter(hasTeam=False)  # Players without teams
+            
+            # Filtering players based on position
+            if position:
+                queryset = queryset.filter(position=position)  # Filter by position
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        ''' Add the search form to the context for the template. '''
+        context = super().get_context_data(**kwargs)
+        context['form'] = PlayerSearchForm(self.request.GET)  # Add the form to context
+        return context

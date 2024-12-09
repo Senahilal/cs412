@@ -1,0 +1,54 @@
+<!-- project/templates/project/show_all_players.html -->
+{% extends 'project/base.html' %}
+
+{% block content %}
+<!-- Search form for filtering players -->
+<form method="GET" class="players-filter-form">
+  {{ form.as_p }}
+  <button type="submit">Filter</button>
+</form>
+
+<!-- Players Table -->
+<table class="players-table-in-players-page">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Position</th>
+      <th>Team</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for player in players %}
+      <tr>
+        <td><a href="{% url 'show_player' player.pk %}">{{ player.first_name }} {{ player.last_name }}</a></td>
+        <td>{{ player.get_position_display }}</td>
+        <td>
+          {% if player.hasTeam %}
+            {{ player.get_current_team.name }}
+          {% else %}
+            Currently not in a team
+          {% endif %}
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="3">No players found.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+  <!-- Pagination -->
+<div class="page-info">
+  <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+  
+  {% if page_obj.has_previous %}
+      <a href="?page=1">&lt&lt First</a>
+      <a href="?page={{ page_obj.previous_page_number }}"> &lt Prev</a>
+  {% endif %}
+
+  {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}"> Next &gt</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">Last &gt&gt</a>
+  {% endif %}
+</div>
+
+{% endblock %}

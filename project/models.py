@@ -20,6 +20,7 @@ class Player(models.Model):
     position = models.CharField(max_length=2, choices=POSITTION_CHOICES, default='ND')
     number = models.IntegerField(blank=True, null=True)
     profile_image_file = models.ImageField(blank=True, null=True)
+    hasTeam = models.BooleanField(default=False)
     
 
     #associate each Player with an User for authentication and identification purposes
@@ -64,6 +65,10 @@ class Player(models.Model):
             if current_team_record:
                 current_team_record.end_date = datetime.now()
                 current_team_record.save()
+            
+            # Setting the player’s `hasTeam` to True when they accept the invitation
+            self.hasTeam = True
+            self.save()
 
             # Add the player to the manager's team
             PlaysIn.objects.create(

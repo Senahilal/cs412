@@ -15,6 +15,7 @@ This is base page from which all other pages will inherit.
                 <ul>
                     <li><a href="{% url 'show_all_matches' %}">Matches</a></li>
                     <li><a href="{% url 'show_all_teams' %}">Teams</a></li>
+                    <li><a href="{% url 'show_all_players' %}">All Players</a></li>
                     {% if user.is_authenticated %}
                         <!-- Logged in user: {{request.user}} -->
                         <li><a href="{% url 'inbox' %}">Inbox</a></li>

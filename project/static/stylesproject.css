@@ -992,3 +992,117 @@ footer a{
 .form-container .cancel-button:hover {
     background-color: #bbb; /* Darker gray on hover */
 }
+
+
+
+/* SHOW ALL PLAYERS PAGE */
+
+/* Team players table styling */
+.players-table-in-players-page {
+    width: 90%; /* takes 90% of its parent */
+    margin: 10px auto; /* Center horizontally */
+    border-collapse: collapse;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.players-table-in-players-page thead tr {
+    background-color: #d40210;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+.players-table-in-players-page th,
+.players-table-in-players-page td {
+    padding: 12px 15px;
+    border: 1px solid #e3e3e3;
+}
+
+.players-table-in-players-page tbody tr {
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.players-table-in-players-page tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9; /* Light gray for alternate rows */
+}
+
+.players-table-in-players-page tbody tr:hover {
+    background-color: #ffe6e6; /* Light red on hover */
+}
+
+.players-table-in-players-page a {
+    color: #d40210;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.players-table-in-players-page a:hover {
+    text-decoration: underline;
+}
+
+/* Form styling */
+.players-filter-form {
+    width: 90%; /* Same as the table width */
+    margin: 30px auto;
+    padding: 20px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for individual form fields */
+.players-filter-form label {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: inline-block;
+}
+
+.players-filter-form input,
+.players-filter-form select,
+.players-filter-form button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #e3e3e3;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.players-filter-form input[type="text"],
+.players-filter-form select {
+    background-color: #ffffff;
+}
+
+.players-filter-form button {
+    background-color: #d40210; /* Red button */
+    color: #ffffff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.players-filter-form button:hover {
+    background-color: #b30000; /* Darker red on hover */
+}
+
+.page-info{
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    color:#333333;
+
+}
+
+.page-info a {
+    text-decoration: none;
+    color: #d40210; /* Match the theme */
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s;
+}
