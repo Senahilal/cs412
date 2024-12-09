@@ -11,6 +11,7 @@
 <!-- Players Table -->
 <table class="players-table-in-players-page">
   <thead>
+    <!-- headers: name, position, team -->
     <tr>
       <th>Name</th>
       <th>Position</th>
@@ -18,19 +19,23 @@
     </tr>
   </thead>
   <tbody>
+    <!-- Loop through each player and display their details in the table -->
     {% for player in players %}
       <tr>
         <td><a href="{% url 'show_player' player.pk %}">{{ player.first_name }} {{ player.last_name }}</a></td>
         <td>{{ player.get_position_display }}</td>
         <td>
           {% if player.hasTeam %}
+            <!-- If the player has a team, display the team's name -->
             {{ player.get_current_team.name }}
           {% else %}
-            Currently not in a team
+          <!-- If the player doesn't have a team, display a message -->
+            <p>Currently not in a team</p>
           {% endif %}
         </td>
       </tr>
     {% empty %}
+    <!-- If there are no players, display this message and span across all columns-->
       <tr><td colspan="3">No players found.</td></tr>
     {% endfor %}
   </tbody>
@@ -38,13 +43,17 @@
 
   <!-- Pagination -->
 <div class="page-info">
+  
+  <!-- Display current page and total pages -->
   <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
   
+  <!-- Links for navigating to previous pages -->
   {% if page_obj.has_previous %}
       <a href="?page=1">&lt&lt First</a>
       <a href="?page={{ page_obj.previous_page_number }}"> &lt Prev</a>
   {% endif %}
 
+  <!-- Links for navigating to next pages -->
   {% if page_obj.has_next %}
       <a href="?page={{ page_obj.next_page_number }}"> Next &gt</a>
       <a href="?page={{ page_obj.paginator.num_pages }}">Last &gt&gt</a>

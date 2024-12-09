@@ -6,11 +6,17 @@
     <h2>Request a Match</h2>
     <p>Choose a date to request a match against {{ team.name }}.</p>
     <form method="post">
+        <!-- CSRF token for security -->
         {% csrf_token %}
+
+        <!-- Displaying the form fields using the form we created in forms.py-->
         {{ form.as_p }}
         <button type="submit" class="submit-button">Send Match Request</button>
     </form>
     <br>
+
+    <!-- Link to navigate back to the team's page -->
+    <!-- This cancels the request -->
     <a href="{% url 'show_team' team.pk %}" class="back-button">Back to Team</a>
 </div>
 {% endblock %}

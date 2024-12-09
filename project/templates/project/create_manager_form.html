@@ -3,19 +3,27 @@
 
 {% block content %}
 <div class="create-manager-container">
+
+    <!-- creating manager account -->
     <h2>Create a Manager Account</h2>
+
     <form method="POST" class="create-manager-form">
+        <!-- CSRF token for security -->
         {% csrf_token %}
         
         <div class="form-section">
+            <!-- Displaying the form fields using the form we created in forms.py to create manager-->
             {{ form.as_p }}
         </div>
 
         <div class="form-section">
+            <!-- User creation form -->
             {{ user_creation_form.as_table }}
         </div>
         <br>
 
+        <!-- Team creation form -->
+        <!-- Only managers can create a team -->
         <h3>Register Your Team</h3>
         <div class="form-section">
             {{create_team_form.as_p}}

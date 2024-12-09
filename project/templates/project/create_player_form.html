@@ -4,9 +4,11 @@
 {% block content %}
 <div class="create-player-container">
 
+    <!-- creating player account -->
     <h2>Create a Player Account</h2>
 
     <form method="POST" enctype="multipart/form-data" class="create-player-form">
+        <!-- CSRF token for security -->
         {% csrf_token %}
 
         <!-- Player object creation form -->

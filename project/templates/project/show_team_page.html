@@ -7,11 +7,14 @@
     <div class="team-page-section">
         <div class="request-button-container">
             <!-- Add Match Request Button -->
+            <!-- show if the user is authenticated and is a manager -->
             {% if user.is_authenticated and user.manager and user.manager != team.manager %}
                 <buton><a href="{% url 'match_request' team.pk %}" class="request-button">Request a Match</a></buton>
             {% endif %}
         </div>
     
+        <!-- Section displaying the team's header information -->
+        <!-- name, location, and head coach -->
         <div class="team-header">
             <h2>{{ team.name }}</h2>
             <p><strong>Location:</strong> {{ team.city }}/{{ team.country }}</p>
@@ -23,9 +26,11 @@
     <!-- Team Players Section -->
     <div class="team-page-section">
         <h3>Players</h3>
+
         <table class="tables-in-team-page">
             <thead>
                 <tr>
+                    <!-- headers -->
                     <th>Name</th>
                     <th>Position</th>
                 </tr>
@@ -33,12 +38,15 @@
             <tbody>
                 {% for player in team.get_current_players %}
                 <tr>
+                    <!-- players name and a link to its page -->
                     <td>
                         <a href="{% url 'show_player' player.pk %}">{{ player.first_name }} {{ player.last_name }}</a>
                     </td>
+                    <!-- player position -->
                     <td>{{ player.position }}</td>
                 </tr>
                 {% empty %}
+                <!-- if there is no players in the team, displays this message -->
                 <tr>
                     <td colspan="2">No players are currently part of this team.</td>
                 </tr>
@@ -50,12 +58,14 @@
     
 
     <div class="team-page-section">
+
         <!-- Played Matches Section -->
         <div class="team-matches-played">
             <h3>Played Matches</h3>
         <table class="tables-in-team-page">
             <thead>
                 <tr>
+                    <!-- headers: Opponent team name, Opponent's score, team's score and date of the game -->
                     <th>Opponent</th>
                     <th>Opponent's Score</th>
                     <th>{{ team.name }}'s Score</th>
@@ -66,13 +76,17 @@
                 {% for match in team.get_played_matches %}
                 <tr>
                     <td>
+                        <!-- checking if this team is was the home team for the match -->
+                        <!-- based on this finding opponent team and providing a link for it -->
                         {% if match.home_team == team %}
+
                             <a href="{% url 'show_team' match.away_team.pk %}">{{ match.away_team }}</a>
                         {% else %}
                             <a href="{% url 'show_team' match.home_team.pk %}">{{ match.home_team }}</a>
                         {% endif %}
                     </td>
                     <td>
+                        <!-- Show the opponent's score based on which team is home -->
                         {% if match.home_team == team %}
                             {{ match.away_score }}
                         {% else %}
@@ -80,6 +94,7 @@
                         {% endif %}
                     </td>
                     <td>
+                        <!-- Show the team's score based on which team is home -->
                         {% if match.home_team == team %}
                             {{ match.home_score }}
                         {% else %}
@@ -89,6 +104,7 @@
                     <td>{{ match.date }}</td>
                 </tr>
                 {% empty %}
+                <!-- If no matches have been played, display this message -->
                 <tr>
                     <td colspan="4">No matches have been played yet.</td>
                 </tr>
@@ -101,10 +117,12 @@
     
 
     <div class="team-page-section">
+
         <!-- Scheduled Matches Section -->
         <div class="team-matches-scheduled">
             <h3>Scheduled Matches</h3>
             <div class="matches-container">
+                <!--Scheduled Match info  -->
                 {% for match in team.get_future_matches %}
                 <div class="match-card">
                     <p><strong>{{ match.home_team }} vs {{ match.away_team }}</strong></p>
@@ -112,6 +130,7 @@
                     <p>Match scheduled</p>
                 </div>
                 {% empty %}
+                <!-- If no upcoming matches, display this message -->
                 <p>No upcoming matches scheduled.</p>
                 {% endfor %}
             </div>
@@ -120,11 +139,14 @@
 
 
     <div class="team-page-section">
+
         <!-- Team Standings Section -->
+         <!-- games played, wins, losses,draws, points, total sets won -->
         <div class="team-standings">
             <h3>Team Standings</h3>
             <table class="standings-table">
                 <thead>
+                    <!-- headers -->
                     <tr>
                         <th>Statistic</th>
                         <th>Value</th>
@@ -162,7 +184,7 @@
     </div>
     
 
-    <a href="{% url 'show_all_teams' %}" class="back-button">Back to All Teams</a>
+    <a href="{% url 'show_all_teams' %}" class="back-button">Go All Teams</a>
 </div>
 {% endblock %}
 

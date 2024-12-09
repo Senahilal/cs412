@@ -3,8 +3,10 @@
 
 {% block content %}
 
+<!-- Table to display the list of all teams with their stats -->
 <table class="teams-table">
     <thead>
+        <!-- headers:Rank, Team, Games Played, Wins, Losses, Draws, Points   -->
         <tr>
             <th>Rank</th>
             <th>Team</th>
@@ -16,9 +18,13 @@
         </tr>
     </thead>
     <tbody>
+
+        <!-- Loop through each team's data and display it in a table row -->
         {% for team_data in teams %}
         <tr>
-            <td>{{ forloop.counter }}</td>
+            <!-- Display the rank of the team (using loop counter) -->
+            <!-- in views.py we are handling ordering by their ranks -->
+            <td>{{ forloop.counter }}</td> 
             <td><a href="{% url 'show_team' team_data.team.pk %}">{{ team_data.team.name }}</a></td>
             <td>{{ team_data.games_played }}</td>
             <td>{{ team_data.wins }}</td>
@@ -28,6 +34,7 @@
         </tr>
         {% empty %}
         <tr>
+            <!-- If there are no teams, display this message and span across all columns-->
             <td colspan="7">No teams available.</td>
         </tr>
         {% endfor %}

@@ -5,6 +5,7 @@
 <div class="login-container">
     <h1>Login</h1>
     <form method="POST" action="{% url 'project_login' %}" class="login-form">
+        <!-- CSRF token for security -->
         {% csrf_token %}
         {{ form.as_p }}
         <input type="hidden" name="next" value="{% url 'show_all_matches' %}">
