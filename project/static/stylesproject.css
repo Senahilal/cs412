@@ -61,31 +61,81 @@ footer a{
 }
 
 /*List of MATCHES PAGE */
-.matches-container {
+/* Matches Page Container */
+.matches-page {
     display: flex;
-    flex-direction: column; /* Arrange match rows vertically */
-    gap: 15px; /* Add space between rows */
-    padding: 10px;
-    margin: 50px auto; /* Top-bottom:20px & Center the container horizontally */
-    max-width: 80%; 
+    flex-direction: row;
+    justify-content: space-between; /* Space between the two sections */
+    margin: 50px auto; /* Center the page vertically */
+    width: 80%; /* Limit the overall width */
+    gap: 20px; /* Space between the sections */
 }
 
-.match-row {
-    background-color: #ffffff;
-    border: 2px solid #d40210; /* Border color matching the navbar*/
-    border-radius: 15px; /* Rounded edges */
-    padding: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
-    font-size: 16px; /* Adjust font size */
+.matches-page h3{
+    color: #bc030f;
+    margin-bottom: 2rem;
+    align-self: center;
 }
 
-.match-row p {
-    margin: 5px 0; /* Add spacing between paragraphs */
+/* centering the h3 title */
+.matches-played, .matches-scheduled{
+    text-align: center;
 }
 
-.match-row strong {
-    color: #d40210; /*strong labels in red */
+.matches-page ul li{
+    list-style: none;
+    margin-bottom: 2rem;
 }
+
+/* Played Matches Section */
+.matches-played {
+    flex: 7; /* Takes 70% of the width */
+}
+
+/* Scheduled Matches Section */
+.matches-scheduled {
+    flex: 3; /* Takes 30% of the width */
+}
+
+/* Divider Line */
+.divider-line {
+    width: 1px; /* Thin vertical line */
+    background-color: #ccc; /* Light gray line */
+    min-height: 100vh; /* Stretch to fit content */
+}
+
+/* Matches Container for Individual Cards */
+.matches-container-in-matches {
+    display: flex;
+    flex-direction: column; /* Stack match cards vertically */
+    gap: 15px; 
+}
+
+/* Individual Match Card */
+.match-card-in-matches {
+    padding: 15px; /* Add padding inside the card */
+    background-color: #ffffff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    text-align: center; /* Center the text */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hover effect */
+}
+
+.match-card-in-matches:hover {
+    transform: translateY(-5px); /* Lift on hover */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+.match-card-in-matches p {
+    margin: 10px 0; /* Space between paragraphs */
+    color: #333; /* Neutral text color */
+    font-size: 16px; /* Consistent font size */
+}
+
+.match-card-in-matches strong {
+    color: #d40210; /* Red text for emphasis */
+}
+
 
 
 /* List of TEAMS PAGE */
@@ -214,12 +264,27 @@ footer a{
 .team-container {
     max-width: 60%; /* Restrict width for readability */
     margin: 50px auto; /* Center the content on the page */
-    padding: 20px;
-    background-color: #ffffff;
-    border-radius: 15px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    position: relative;
 }
+
+/* General container styling for team page sections */
+.team-page-section {
+    width: 100%;
+    position: relative;
+    margin-bottom: 30px; /* Add space between sections */
+    padding: 20px; /* Add padding inside the box */
+    background-color: #ffffff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.team-page-section h3{
+    text-align: center;
+    font-size: 24px; /* Larger font for the team name */
+    margin-bottom: 15px;
+    color: #d40210;
+}
+
+
 
 /* Container for the invite button */
 .request-button-container {
@@ -272,29 +337,50 @@ footer a{
     margin: 5px 0;
 }
 
-.team-players h3 {
-    color: #d40210; /* Red for the "Players" heading */
-    margin-bottom: 10px;
+/* Team players table styling */
+.tables-in-team-page {
+    width: 90%; /* takes 90% of its parent */
+    margin: 0 auto; /* Center horizontally */
+    border-collapse: collapse;
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
-.team-players ul {
-    list-style: none; /* Remove default bullet points */
-    padding: 0;
-}
-
-.team-players li {
-    margin-bottom: 10px; /* Add space between players */
-    font-size: 16px;
-}
-
-.team-players a {
-    color: #d40210; /* Red for player links */
-    text-decoration: none; /* Remove underline */
+.tables-in-team-page thead tr {
+    background-color: #d40210; /* Red header */
+    color: #ffffff;
     font-weight: bold;
 }
 
-.team-players a:hover {
-    text-decoration: underline; /* Underline on hover */
+.tables-in-team-page th,
+.tables-in-team-page td {
+    padding: 12px 15px;
+    border: 1px solid #e3e3e3;
+}
+
+.tables-in-team-page tbody tr {
+    background-color: #ffffff;
+    transition: background-color 0.3s;
+}
+
+.tables-in-team-page tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9; /* Light gray for alternate rows */
+}
+
+.tables-in-team-page tbody tr:hover {
+    background-color: #ffe6e6; /* Light red on hover */
+}
+
+.tables-in-team-page a {
+    color: #d40210;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.tables-in-team-page a:hover {
+    text-decoration: underline;
 }
 
 .back-button {
@@ -311,6 +397,84 @@ footer a{
 
 .back-button:hover {
     background-color: #bc030f; /* Darker red on hover */
+}
+
+/* Container for scheduled matches */
+.matches-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow cards to wrap to the next line */
+    gap: 20px; /* Space between cards */
+    justify-content: center; /* Center align cards */
+}
+
+/* Individual scheduled match card */
+.match-card {
+    width: 90%; /* Fixed width for consistency */
+    padding: 15px; /* Padding inside the card */
+    background-color: #ffffff; /* White background for the card */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: center; /* Center text within the card */
+}
+
+/* Match card text styling */
+.match-card p {
+    margin: 10px 0; /* Space between paragraphs */
+    color: #333; /* Neutral text color */
+    font-size: 16px; /* Consistent font size */
+}
+
+.match-card strong {
+    color: #d40210; /* Red text for emphasis */
+}
+
+/* Team Standings Section Styling */
+.team-standings {
+    width: 100%; /* Take full width of the section */
+
+}
+
+.team-standings h3 {
+    text-align: center;
+    font-size: 24px;
+    color: #d40210; /* Red for the title */
+    margin-bottom: 20px; /* Add spacing below the title */
+}
+
+/* Styling for the standings table */
+.standings-table {
+    width: 80%; /* Table width relative to section */
+    margin: 0 auto; /* Center the table */
+    border-collapse: collapse; /* Remove gaps between table cells */
+    text-align: left; /* Left-align the text */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add shadow */
+    border-radius: 10px; /* Round the table corners */
+    overflow: hidden; /* Prevent border overflow */
+}
+
+.standings-table thead tr {
+    background-color: #d40210; /* Red header background */
+    color: #ffffff; /* White text for headers */
+    font-weight: bold; /* Bold text for the header */
+}
+
+.standings-table th, 
+.standings-table td {
+    padding: 12px 15px; /* Spacing inside cells */
+    border: 1px solid #e3e3e3; /* Light gray border */
+}
+
+.standings-table tbody tr {
+    background-color: #ffffff; /* White row background */
+    transition: background-color 0.3s; /* Smooth hover transition */
+}
+
+.standings-table tbody tr:nth-of-type(even) {
+    background-color: #f9f9f9; /* Even rows are light gray */
+}
+
+.standings-table tbody tr:hover {
+    background-color: #ffe6e6; /* Light red on hover */
 }
 
 

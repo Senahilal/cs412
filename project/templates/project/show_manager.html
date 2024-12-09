@@ -30,16 +30,6 @@
                     {{ manager.get_team.name }}
                 </a>
             </p>
-            <h4>Players in the Team:</h4>
-            <ul>
-                {% for player in manager.get_players_in_team %}
-                <li>
-                    <a href="{% url 'show_player' player.pk %}">
-                        {{ player.first_name }} {{ player.last_name }}
-                    </a> - {{ player.position }}
-                </li>
-                {% endfor %}
-            </ul>
         {% else %}
             <p>This manager currently does not manage a team.</p>
         {% endif %}

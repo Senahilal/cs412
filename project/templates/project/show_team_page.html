@@ -3,60 +3,164 @@
 
 {% block content %}
 <div class="team-container">
+
+    <div class="team-page-section">
+        <div class="request-button-container">
+            <!-- Add Match Request Button -->
+            {% if user.is_authenticated and user.manager and user.manager != team.manager %}
+                <buton><a href="{% url 'match_request' team.pk %}" class="request-button">Request a Match</a></buton>
+            {% endif %}
+        </div>
     
-    <div class="request-button-container">
-        <!-- Add Match Request Button -->
-        {% if user.is_authenticated and user.manager and user.manager != team.manager %}
-            <buton><a href="{% url 'match_request' team.pk %}" class="request-button">Request a Match</a></buton>
-        {% endif %}
-    </div>
-    <div class="team-header">
-        <h2>{{ team.name }}</h2>
-        <p><strong>Location:</strong> {{ team.city }}/{{ team.country }}</p>
-        <p><strong>Head Coach:</strong> <a href="{% url 'show_manager' team.manager.pk %}">{{ team.manager.first_name }} {{ team.manager.last_name }}</a></p>
+        <div class="team-header">
+            <h2>{{ team.name }}</h2>
+            <p><strong>Location:</strong> {{ team.city }}/{{ team.country }}</p>
+            <p><strong>Head Coach:</strong> <a href="{% url 'show_manager' team.manager.pk %}">{{ team.manager.first_name }} {{ team.manager.last_name }}</a></p>
+        </div>
+    
     </div>
 
-    <div class="team-players">
+    <!-- Team Players Section -->
+    <div class="team-page-section">
         <h3>Players</h3>
-        <ul>
-            {% for player in team.get_current_players %}
-            <li>
-                <a href="{% url 'show_player' player.pk %}">
-                    {{ player.first_name }} {{ player.last_name }}
-                </a> - {{ player.position }}
-            </li>
-            {% empty %}
-            <p>No players are currently part of this team.</p>
-            {% endfor %}
-        </ul>
-    </div>
-
-    <div class="team-matches-table">
-        <table class="teams-table">
+        <table class="tables-in-team-page">
             <thead>
                 <tr>
-                    <th></th>
-                    <th>Score</th>
-                    
+                    <th>Name</th>
+                    <th>Position</th>
                 </tr>
             </thead>
             <tbody>
-                {% for match in team.get_played_matches%}
+                {% for player in team.get_current_players %}
                 <tr>
-                    <td><a href="{% url 'show_team' match.home_team.pk %}">{{ match.home_team }}</a> vs <a href="{% url 'show_team' match.away_team.pk %}">{{ match.away_team }}</a></td>
-                    <td>{{ match.home_score }} - {{ match.away_score }}</td>
-                    <!-- <td>{{ team.manager.first_name }} {{ team.manager.last_name }}</td> -->
+                    <td>
+                        <a href="{% url 'show_player' player.pk %}">{{ player.first_name }} {{ player.last_name }}</a>
+                    </td>
+                    <td>{{ player.position }}</td>
                 </tr>
-
                 {% empty %}
-                    <p>No match history</p>
+                <tr>
+                    <td colspan="2">No players are currently part of this team.</td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
-        
-
-        
     </div>
+    
+    
+
+    <div class="team-page-section">
+        <!-- Played Matches Section -->
+        <div class="team-matches-played">
+            <h3>Played Matches</h3>
+        <table class="tables-in-team-page">
+            <thead>
+                <tr>
+                    <th>Opponent</th>
+                    <th>Opponent's Score</th>
+                    <th>{{ team.name }}'s Score</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in team.get_played_matches %}
+                <tr>
+                    <td>
+                        {% if match.home_team == team %}
+                            <a href="{% url 'show_team' match.away_team.pk %}">{{ match.away_team }}</a>
+                        {% else %}
+                            <a href="{% url 'show_team' match.home_team.pk %}">{{ match.home_team }}</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if match.home_team == team %}
+                            {{ match.away_score }}
+                        {% else %}
+                            {{ match.home_score }}
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if match.home_team == team %}
+                            {{ match.home_score }}
+                        {% else %}
+                            {{ match.away_score }}
+                        {% endif %}
+                    </td>
+                    <td>{{ match.date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No matches have been played yet.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            
+        </table>
+        </div>
+    </div>
+    
+
+    <div class="team-page-section">
+        <!-- Scheduled Matches Section -->
+        <div class="team-matches-scheduled">
+            <h3>Scheduled Matches</h3>
+            <div class="matches-container">
+                {% for match in team.get_future_matches %}
+                <div class="match-card">
+                    <p><strong>{{ match.home_team }} vs {{ match.away_team }}</strong></p>
+                    <p><strong>Date:</strong> {{ match.date }}</p>
+                    <p>Match scheduled</p>
+                </div>
+                {% empty %}
+                <p>No upcoming matches scheduled.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+    <div class="team-page-section">
+        <!-- Team Standings Section -->
+        <div class="team-standings">
+            <h3>Team Standings</h3>
+            <table class="standings-table">
+                <thead>
+                    <tr>
+                        <th>Statistic</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Games Played</td>
+                        <td>{{ standings_data.games_played }}</td>
+                    </tr>
+                    <tr>
+                        <td>Wins</td>
+                        <td>{{ standings_data.wins }}</td>
+                    </tr>
+                    <tr>
+                        <td>Losses</td>
+                        <td>{{ standings_data.losses }}</td>
+                    </tr>
+                    <tr>
+                        <td>Draws</td>
+                        <td>{{ standings_data.draws }}</td>
+                    </tr>
+                    <tr>
+                        <td>Points</td>
+                        <td>{{ standings_data.points }}</td>
+                    </tr>
+                    <tr>
+                        <td>Sets Won</td>
+                        <td>{{ standings_data.sets_won }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+    
 
     <a href="{% url 'show_all_teams' %}" class="back-button">Back to All Teams</a>
 </div>

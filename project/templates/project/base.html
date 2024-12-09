@@ -20,8 +20,19 @@ This is base page from which all other pages will inherit.
                         <li><a href="{% url 'inbox' %}">Inbox</a></li>
                         
                         {% if request.user.player %}
+                            <!-- If player currently has a team show the link to team page of the player  -->
+                            {% if request.user.player.get_current_team %}
+                                <li><a href="{% url 'show_team' request.user.player.get_current_team.pk %}">My Team</a></li>
+                            {% endif %}
+                            <!-- Link to player's profile page -->
                             <li><a href="{% url 'show_player' request.user.player.pk %}">My Profile</a></li>
+                            
                         {% elif request.user.manager %}
+                            <!-- If manager has a team show the link to team page of the player  -->
+                            {% if request.user.manager.get_team %}
+                                <li><a href="{% url 'show_team' request.user.manager.get_team.pk %}">My Team</a></li>
+                            {% endif %}
+                            <!-- Link to manager's profile page -->
                             <li><a href="{% url 'show_manager' request.user.manager.pk %}">My Profile</a></li>
                         {% endif %}
                     {% else %}

@@ -22,6 +22,12 @@ class ShowAllMatchesView(ListView):
     template_name = 'project/show_all_matches.html'
     context_object_name = 'matches'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['played_matches'] = Match.get_all_played_matches()
+        context['scheduled_matches'] = Match.get_all_scheduled_matches()
+        return context
+
 class ShowAllTeamsView(ListView):
     '''A view to show all Matxhes.'''
 
@@ -41,6 +47,7 @@ class ShowTeamPageView(DetailView):
         context = super().get_context_data(**kwargs)
         # Add any additional data to context
         team = self.get_object()
+        context['standings_data'] = team.get_standings_data()
 
         return context
 

@@ -2,18 +2,58 @@
 {% extends 'project/base.html' %}
 
 {% block content %}
+<div class="matches-page">
+    <!-- Played Matches Section -->
+    <div class="matches-played">
+        <h3>Played Matches</h3>
+        <div class="matches-container-in-matches">
+            <ul>
+                {% for match in played_matches %}
+                <li class="match-card-in-matches">
+                    <!-- Display the teams that played this match-->
+                    <p><strong>{{ match.home_team }} vs {{ match.away_team }}</strong></p>
+                    <!-- Display the match date -->
+                    <p><strong>Date:</strong> {{ match.date }}</p>
 
-<div class="matches-container">
-    {% for match in matches %}
-    <div class="match-row">
-        <p><strong>{{ match.home_team }} vs {{ match.away_team }}</strong></p>
-        <p><strong>Date:</strong> {{ match.date }}</p>
-        {% if match.home_score is not None and match.away_score is not None %}
-            <p><strong>Score:</strong>{{ match.home_score }} - {{ match.away_score }}</p>
-        {% else %}
-            <p>Match scheduled</p>
-        {% endif %}
+                    <!-- Display the score if available -->
+                    {% if match.home_score is not None and match.away_score is not None %}
+                        <p><strong>Score:</strong> {{ match.home_score }} - {{ match.away_score }}</p>
+                    {% else %}
+                        <!-- If the match played recently and scores has not been updated -->
+                        <!-- print out informing message -->
+                        <p>Scores will be updated soon</p>
+                    {% endif %}
+                </li>
+                {% empty %}
+                <!-- Message if no matches have been played -->
+                <p>No matches have been played yet.</p>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-    {% endfor %}
+
+    <!-- Vertical Divider between the played and scheduled matches sections -->
+    <div class="divider-line"></div>
+
+    <!-- Scheduled Matches Section -->
+    <div class="matches-scheduled">
+        <h3>Upcoming Matches</h3>
+        <div class="matches-container-in-matches">
+            <ul>
+                {% for match in scheduled_matches %}
+                <li class="match-card-in-matches">
+                    <!-- Display the teams that scheduled this match-->
+                    <p><strong>{{ match.home_team }} vs {{ match.away_team }}</strong></p>
+                    <!-- Display the match date -->
+                    <p><strong>Date:</strong> {{ match.date }}</p>
+                    <p>Match scheduled</p>
+                </li>
+                {% empty %}
+                <!-- Message if there is no upcoming matches -->
+                <p>No upcoming matches scheduled.</p>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
 </div>
 {% endblock %}

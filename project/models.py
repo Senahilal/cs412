@@ -45,9 +45,9 @@ class Player(models.Model):
         return Team.objects.filter(playsin__player=self, playsin__end_date__isnull=False)
     
     def respond_to_invitation(self, invitation, response):
-        """
+        '''
         Responds to the given invitation with 'Accepted' or 'Rejected'.
-        """
+        '''
         if invitation.invitee != self:
             raise ValueError("This invitation does not belong to the current player.")
 
@@ -95,26 +95,26 @@ class Manager(models.Model):
         return reverse('show_manager', kwargs={'pk': self.pk})
     
     def get_team(self):
-        """Returns the team managed by this manager."""
+        '''Returns the team managed by this manager.'''
         return Team.objects.filter(manager=self).first()
     
     def get_players_in_team(self):
-        """Returns all players in the team managed by this manager."""
+        '''Returns all players in the team managed by this manager.'''
         team = self.get_team()
         if team:
             return team.get_current_players()
         return []
     
     def get_pending_invitees(self):
-        """
+        '''
         Returns a queryset of players who have pending invitations from this manager.
-        """
+        '''
         return Player.objects.filter(receiver__inviter=self, receiver__status="Pending")
     
     def send_invitation(self, player):
-        """
+        '''
         Sends an invitation to the specified player if conditions are met.
-        """
+        '''
         # Check if the player is already in the manager's team
         if player in self.get_players_in_team():
             raise ValueError("Player is already in your team.")
@@ -129,9 +129,9 @@ class Manager(models.Model):
         return "Invitation sent successfully."
 
     def respond_to_match_request(self, match_request, response):
-        """
+        '''
         Responds to the given match request with 'Accepted' or 'Rejected'.
-        """
+        '''
 
         #
         if match_request.receiver != self:
@@ -163,34 +163,87 @@ class Team(models.Model):
         return self.name
     
     def get_current_players(self):
-        """
-        Returns all players currently in this team.
-        """
+        '''Returns all players currently in this team.'''
         return Player.objects.filter(playsin__team=self, playsin__end_date__isnull=True)
 
     def get_old_players(self):
-        """
-        Returns all players who were previously part of this team.
-        """
+        ''' Returns all players who were previously part of this team. '''
         return Player.objects.filter(playsin__team=self, playsin__end_date__isnull=False)
     
     def get_matches(self):
-        """
-        Returns all matches for this team, ordered by date.
-        """
+        ''' Returns all matches for this team, ordered by date.'''
         return Match.objects.filter(models.Q(home_team=self) | models.Q(away_team=self)).order_by('date')
     
     def get_played_matches(self):
-        """
-        Returns all played matches for this team (before the current time and date)
-        """
+        ''' Returns all played matches for this team (before the current time and date) '''
         return self.get_matches().filter(date__lte=datetime.now().date()).order_by('-date')
     
     def get_future_matches(self):
-        """
+        '''
         Returns all future matches for this team.
-        """
+        '''
         return self.get_matches().filter(date__gte=datetime.now().date()).order_by('date')
+    
+    def get_standings_data(self):
+        '''Returns statistics for the team.
+        This method calculates various statistics:
+        - Games played
+        - Wins
+        - Losses
+        - Draws
+        - Sets won
+        - Points (3*win) +1 ==> every win 3 points and every draw 1 point
+        '''
+
+        # all of matches this team played and scheduled 
+        matches = Match.objects.filter(
+            models.Q(home_team=self) | models.Q(away_team=self)
+        )
+
+        # The matches this team played
+        # when home or away team any of the score must not be null
+        games_played = matches.filter(home_score__isnull=False).count()
+
+        #Total number of matches this team won
+        wins = matches.filter(
+            models.Q(home_team=self, home_score__gt=models.F('away_score')) |
+            models.Q(away_team=self, away_score__gt=models.F('home_score'))
+        ).count()
+
+        #Total number of matches this team lost
+        losses = matches.filter(
+            models.Q(home_team=self, home_score__lt=models.F('away_score')) |
+            models.Q(away_team=self, away_score__lt=models.F('home_score'))
+        ).count()
+
+        #Draws
+        draws = matches.filter(
+            models.Q(home_team=self, home_score=models.F('away_score')) |
+            models.Q(away_team=self, away_score=models.F('home_score'))
+        ).count()
+
+        #if this team played game 
+        if games_played > 0:
+            sets_won =0
+
+            #Total number of goals scored by this team
+            # = total number of sets this team won
+            sets_won = matches.filter(home_team=self).aggregate(total=models.Sum('home_score'))['total'] or 0
+            sets_won += matches.filter(away_team=self).aggregate(total=models.Sum('away_score'))['total'] or 0
+
+
+        #Calculating points based on wins and draws
+        points = (wins * 3) + draws
+
+        #dictionary containing the team's standings data
+        return {
+            "games_played": games_played,
+            "wins": wins,
+            "losses": losses,
+            "draws": draws,
+            "points": points,
+            "sets_won": sets_won,
+        }
 
 class Match(models.Model):
     date = models.DateField()
@@ -201,7 +254,15 @@ class Match(models.Model):
     
     def __str__(self):
         return f"{self.home_team} vs {self.away_team} on {self.date}"
-
+    
+    def get_all_played_matches():
+        '''Returns all matches that have been played.'''
+        # date__lte=datetime.now().date()
+        return Match.objects.filter(date__lte=datetime.now().date()).order_by('-date')
+    
+    def get_all_scheduled_matches():
+        '''Returns all matches that are scheduled for the future.'''
+        return Match.objects.filter(date__gte=datetime.now().date()).order_by('date')
 
 class PlaysIn(models.Model):
     '''Represents a relation between a team and a player.'''
