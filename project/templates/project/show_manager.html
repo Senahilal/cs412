@@ -3,8 +3,17 @@
 
 {% block content %}
 <div class="profile-container">
+
     <!-- Manager Profile Section -->
     <div class="manager-profile">
+
+        <!-- If its current user's profile show update info button -->
+        {% if request.user.manager %}
+            <div class="update-button-container">
+                <button><a href="{% url 'update_manager' %}" class="update-profile-button">Update Profile</a></button>
+            </div>
+        {% endif %}
+        
         <!-- Profile Image -->
         <div class="manager-image">
             {% if manager.profile_image_file %}

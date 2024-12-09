@@ -129,9 +129,7 @@ class Manager(models.Model):
         return "Invitation sent successfully."
 
     def respond_to_match_request(self, match_request, response):
-        '''
-        Responds to the given match request with 'Accepted' or 'Rejected'.
-        '''
+        ''' Responds to the given match request with 'Accepted' or 'Rejected'.'''
 
         #
         if match_request.receiver != self:

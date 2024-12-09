@@ -7,13 +7,13 @@
     <!-- Profile Section -->
     <div class="player-profile">
 
-        <!-- Invitation Button -->
-        <div class="invite-button-container">
-            <!-- If authenticated user is manager and this player is not user's team, 
-            user can send invite to the player -->
-            {% if user.is_authenticated and user.manager %}
-                <!-- Check if the player is not in the manager's team -->
-                {% if player not in user.manager.get_players_in_team %}
+        <!-- If authenticated user is manager and this player is not user's team, 
+        user can send invite to the player -->
+        {% if user.is_authenticated and user.manager %}
+            <!-- Check if the player is not in the manager's team -->
+            {% if player not in user.manager.get_players_in_team %}
+                <!-- Show Invitation Button -->
+                <div class="invite-button-container">
                     <!-- Check if the player already has a pending invitation -->
                     {% if player in user.manager.get_pending_invitees %}
                         <button type="button" class="invite-button disabled" disabled>Sent</button>
@@ -23,9 +23,16 @@
                             <button type="submit" class="invite-button">Send Invite</button>
                         </form>
                     {% endif %}
-                {% endif %}
+                </div>
             {% endif %}
-        </div>
+        {% endif %}
+
+        <!-- If its current user's prfile show update info button -->
+        {% if request.user.player %}
+            <div class="update-button-container">
+                <button><a href="{% url 'update_player' %}" class="update-profile-button">Update Profile</a></button>
+            </div>
+        {% endif %}
 
         <!-- Profile Image -->
         <div class="player-image">

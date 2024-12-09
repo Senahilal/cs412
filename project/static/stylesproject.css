@@ -118,12 +118,6 @@ footer a{
     border-radius: 10px; /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     text-align: center; /* Center the text */
-    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Hover effect */
-}
-
-.match-card-in-matches:hover {
-    transform: translateY(-5px); /* Lift on hover */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
 }
 
 .match-card-in-matches p {
@@ -506,10 +500,21 @@ footer a{
     right: 10px; /* Distance from the right edge */
 }
 
+.update-button-container{
+    position: absolute;
+    top: 10px; /* Distance from the top edge */
+    right: 10px; /* Distance from the right edge */
+}
+
+.update-button-container a{
+    text-decoration: none;
+    color: #ffffff;
+}
+
 /* Styling the invite button */
-.invite-button {
+.invite-button, .update-button-container button {
     background-color: #d40210; /* Red background */
-    color: #ffffff; /* White text */
+    color: #ffffff;
     border: none;
     border-radius: 8px;
     padding: 10px 15px;
@@ -530,6 +535,7 @@ footer a{
 }
 
 .manager-profile {
+    position: relative;
     display: flex;
     gap: 20px;
     margin-top: 20px;
@@ -591,10 +597,11 @@ footer a{
 
 .logout-button {
     display: inline-block; /* Inline button */
-    margin-top: 20px; /* Space above the back button */
-    padding: 10px 15px; /* Padding inside the button */
-    background-color: #d40210; /* Red background */
-    color: #ffffff; /* White text */
+    margin-top: 20px; 
+    padding: 10px 15px; 
+    background-color: #d40210;
+    color: #ffffff; 
+    border: none;
     border-radius: 8px; /* Rounded edges */
     text-decoration: none; /* Remove underline */
     font-size: 16px; /* Font size for the button */
@@ -897,4 +904,91 @@ footer a{
 .inbox-item .response-status {
     font-weight: bold;
     color: #555; /* Neutral color for status text */
+}
+
+
+/* UPDATE PROFILE FORMS */
+.form-container {
+    max-width: 40%; 
+    margin: 50px auto; /* Center the container */
+    padding: 20px;
+    background-color: #ffffff; /* White background */
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    text-align: left; /* Center align the content */
+}
+
+/* Page Title Styling */
+.form-container h2 {
+    color: #d40210; 
+    font-size: 24px; 
+    margin: 20px;
+    text-align: center;
+}
+
+/* Styling the Form */
+.form-container form {
+    display: flex;
+    flex-direction: column; /* Stack form elements vertically */
+    gap: 15px; /* Space between form elements */
+}
+
+/* Styling Input Fields and Select Boxes */
+.form-container input[type="text"],
+.form-container input[type="email"],
+.form-container input[type="number"],
+.form-container input[type="file"],
+.form-container select,
+.form-container textarea {
+    width: 100%; /* Full width */
+    padding: 10px;
+    font-size: 16px; /* Adjust font size */
+    border: 1px solid #ddd; /* Light gray border */
+    border-radius: 8px; /* Rounded corners */
+    box-sizing: border-box; /* Include padding in width */
+}
+
+/* Focused Input Fields */
+.form-container input:focus,
+.form-container select:focus,
+.form-container textarea:focus {
+    border-color: #d40210; /* Red border on focus */
+    outline: none; /* Remove default outline */
+    box-shadow: 0 0 4px rgba(212, 2, 16, 0.5); /* Red glow effect */
+}
+
+/* Submit Button */
+.form-container .submit-button {
+    background-color: #d40210; /* Red background */
+    color: #ffffff; /* White text */
+    font-size: 16px; /* Font size */
+    padding: 10px 15px; /* Padding */
+    border: none; /* Remove border */
+    border-radius: 8px; /* Rounded edges */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Submit Button Hover */
+.form-container .submit-button:hover {
+    background-color: #bc030f; /* Darker red on hover */
+}
+
+/* Cancel Button */
+.form-container .cancel-button {
+    display: inline-block; /* Inline button */
+    margin-top: 20px; /* Space above */
+    padding: 10px 15px; /* Padding */
+    background-color: #ddd; /* Light gray background */
+    color: #333; /* Neutral text color */
+    border-radius: 8px; /* Rounded edges */
+    text-decoration: none; /* Remove underline */
+    font-size: 16px; /* Font size */
+    text-align: center; /* Center the text */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Cancel Button Hover */
+.form-container .cancel-button:hover {
+    background-color: #bbb; /* Darker gray on hover */
 }

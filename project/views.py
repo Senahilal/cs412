@@ -35,6 +35,34 @@ class ShowAllTeamsView(ListView):
     template_name = 'project/show_all_teams.html'
     context_object_name = 'teams'
 
+    def get_queryset(self):
+        """
+        Ranks teams based on their standings data, specifically points and games played.
+        """
+        # Start with the base queryset of teams
+        qs = super().get_queryset()
+
+        # Calculating standings for each team
+        standings = []
+        for team in qs:
+            data = team.get_standings_data()
+            standings.append({
+                "team": team,
+                "games_played": data["games_played"],
+                "wins": data["wins"],
+                "losses": data["losses"],
+                "draws": data["draws"],
+                "points": data["points"],
+                "sets_won": data["sets_won"],
+            })
+
+        # Sort teams primarily by points (descending)
+        #  then by games played (ascending)
+        qs = sorted(standings, key=lambda x: (-x["points"], x["games_played"]))
+
+        # Return the sorted list of teams
+        return qs
+
 class ShowTeamPageView(DetailView):
     '''A view to show a single team.'''
 
@@ -170,6 +198,39 @@ class CreateManagerView(CreateView):
             return reverse('show_team', kwargs={'pk': team.pk})
         return reverse('show_all_teams')  # Defaultm page to go to if no team is found
 
+# To update player information
+class UpdatePlayerView(LoginRequiredMixin, UpdateView):
+    model = Player
+    form_class = UpdatePlayerForm
+    template_name = 'project/update_player_form.html'
+
+    # Redirect users to project_login if not authenticated
+    def get_login_url(self):
+        return reverse('project_login')
+
+    def get_success_url(self):
+        return reverse('show_player', kwargs={'pk': self.object.pk})
+
+    # get the logged-in user
+    def get_object(self):
+        return self.request.user.player
+
+# To update manager information
+class UpdateManagerView(LoginRequiredMixin, UpdateView):
+    model = Manager
+    form_class = UpdateManagerForm
+    template_name = 'project/update_manager_form.html'
+
+    # Redirect users to project_login if not authenticated
+    def get_login_url(self):
+        return reverse('project_login')
+
+    def get_success_url(self):
+        return reverse('show_manager', kwargs={'pk': self.object.pk})
+
+    # get the logged-in user
+    def get_object(self):
+        return self.request.user.manager  
 
 # To show invitation and responses to player and manager profiles
 class InboxView(LoginRequiredMixin, ListView):
@@ -318,3 +379,4 @@ class RespondMatchRequestView(LoginRequiredMixin, View):
                 messages.error(request, str(e))
 
         return redirect('inbox')
+
