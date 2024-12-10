@@ -28,6 +28,8 @@ class CreateManagerForm(forms.ModelForm):
     first_name = forms.CharField(label="First Name", required=True)
     last_name = forms.CharField(label="Last Name", required=True)
     email = forms.EmailField(label="Email", required=True)
+    profile_image_file = forms.ImageField(label="Profile Image", required=False)
+
 
     class Meta:
         '''Associate this form with the Manager model.'''

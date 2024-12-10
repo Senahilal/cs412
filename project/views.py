@@ -51,7 +51,6 @@ class ShowAllTeamsView(ListView):
                 "games_played": data["games_played"],
                 "wins": data["wins"],
                 "losses": data["losses"],
-                "draws": data["draws"],
                 "points": data["points"],
                 "sets_won": data["sets_won"],
             })
@@ -413,5 +412,5 @@ class PlayerListView(ListView):
     def get_context_data(self, **kwargs):
         ''' Add the search form to the context for the template. '''
         context = super().get_context_data(**kwargs)
-        context['form'] = PlayerSearchForm(self.request.GET)  # Add the form to context
+        context['form'] = PlayerSearchForm(self.request.GET)  # Add the search form to context
         return context

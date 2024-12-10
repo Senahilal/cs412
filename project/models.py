@@ -219,11 +219,6 @@ class Team(models.Model):
             models.Q(away_team=self, away_score__lt=models.F('home_score'))
         ).count()
 
-        #Draws
-        draws = matches.filter(
-            models.Q(home_team=self, home_score=models.F('away_score')) |
-            models.Q(away_team=self, away_score=models.F('home_score'))
-        ).count()
 
         # Initialize sets_won to 0
         sets_won = 0
@@ -235,16 +230,20 @@ class Team(models.Model):
             sets_won = matches.filter(home_team=self).aggregate(total=models.Sum('home_score'))['total'] or 0
             sets_won += matches.filter(away_team=self).aggregate(total=models.Sum('away_score'))['total'] or 0
 
+        #Total number of points this team earned
+        points = wins * 3
 
-        #Calculating points based on wins and draws
-        points = (wins * 3) + draws
+        if (models.Q(home_team=self, home_score__lt=models.F('away_score'))):
+            if(models.Q(home_team=self, home_score=2)):
+                points += 1
+
+        
 
         #dictionary containing the team's standings data
         return {
             "games_played": games_played,
             "wins": wins,
             "losses": losses,
-            "draws": draws,
             "points": points,
             "sets_won": sets_won,
         }

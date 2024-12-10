@@ -6,14 +6,13 @@
 <!-- Table to display the list of all teams with their stats -->
 <table class="teams-table">
     <thead>
-        <!-- headers:Rank, Team, Games Played, Wins, Losses, Draws, Points   -->
+        <!-- headers:Rank, Team, Games Played, Wins, Losses, Points   -->
         <tr>
             <th>Rank</th>
             <th>Team</th>
             <th>Games Played</th>
             <th>Wins</th>
             <th>Losses</th>
-            <th>Draws</th>
             <th>Points</th>
         </tr>
     </thead>
@@ -29,7 +28,6 @@
             <td>{{ team_data.games_played }}</td>
             <td>{{ team_data.wins }}</td>
             <td>{{ team_data.losses }}</td>
-            <td>{{ team_data.draws }}</td>
             <td>{{ team_data.points }}</td>
         </tr>
         {% empty %}

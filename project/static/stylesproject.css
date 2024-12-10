@@ -206,17 +206,17 @@ footer a{
 .login-form input[type="password"],
 .login-form button {
     padding: 10px; /* Add padding for better usability */
-    font-size: 16px; /* Adjust font size */
-    border-radius: 10px; /* Rounded edges for inputs and button */
-    border: 1px solid #ddd; /* Light border for inputs */
-    width: 100%; /* Full width of the container */
+    font-size: 16px; 
+    border-radius: 10px; 
+    border: 1px solid #ddd; 
+    width: 100%;
     box-sizing: border-box; /* Include padding in width calculation */
 }
 
 .login-form button {
     background-color: #d40210; /* Red button */
     color: #ffffff; /* White text */
-    border: none; /* Remove border */
+    border: none;
     cursor: pointer; /* Pointer cursor on hover */
     font-weight: bold;
     transition: background-color 0.3s ease; /* Smooth hover transition */
@@ -251,7 +251,11 @@ footer a{
     text-decoration: underline; /* Underline on hover */
 }
 
-
+.errorlist.nonfield{
+    font-size: 14px;
+    color:#b30000;
+    list-style: none;
+}
 
 
 /* TEAM PAGE */
