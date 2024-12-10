@@ -225,10 +225,11 @@ class Team(models.Model):
             models.Q(away_team=self, away_score=models.F('home_score'))
         ).count()
 
+        # Initialize sets_won to 0
+        sets_won = 0
         #if this team played game 
         if games_played > 0:
-            sets_won =0
-
+            
             #Total number of goals scored by this team
             # = total number of sets this team won
             sets_won = matches.filter(home_team=self).aggregate(total=models.Sum('home_score'))['total'] or 0
@@ -284,6 +285,8 @@ class PlaysIn(models.Model):
 
 
 class Invitation(models.Model):
+    '''Represents an invitation sent by a manager to a player for joining their team'''
+
     STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Accepted', 'Accepted'),
@@ -310,7 +313,7 @@ class MatchRequest(models.Model):
     receiver = models.ForeignKey('Manager', on_delete=models.CASCADE, related_name='match_receiver')
     date = models.DateField()
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Pending')
-    timestamp = models.DateTimeField(default=datetime.now)
+    timestamp = models.DateTimeField(default=datetime.now) #Automatically set the time when the invitation is created
 
     def __str__(self):
         '''Return a string representation of this MatchRequest.'''
